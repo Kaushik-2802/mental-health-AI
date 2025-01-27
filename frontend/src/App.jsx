@@ -1,13 +1,18 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-
-function App() {
+import React from "react";
+import ButtonGradient from "./assets/svg/ButtonGradient";
+import Button from "./components/Button";
+const App = () => {
   return (
     <>
-      <h1 className="underline font-bold">hello world</h1>
+      <h1 className="underline"> Hello World </h1>
+      <div className="pt-[4.75rem] lg:pt-[5.25rem] overflow-hidden">
+        <Button className="mt-10" href={"#login"}>
+          Something
+        </Button>
+      </div>
+      <ButtonGradient />
     </>
   );
-}
+};
 
 export default App;
