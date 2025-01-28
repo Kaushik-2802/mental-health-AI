@@ -2,14 +2,13 @@ import React from "react";
 import { navigation } from "../constants";
 import { brainwave } from "../assets";
 import { useLocation } from "react-router-dom";
-
+import Button from "./Button";
 /* Last Save : 30.22  */
 
-const pathname = useLocation();
-
 const Header = () => {
+  const pathname = useLocation();
   return (
-    <div className="fixed top-0 z-50 bg-n-8/90 backdrop-blur-sm border-b border-n-6 lg:bg-n-8/90 lg:backdrop-blur-sm">
+    <div className="fixed top-0 left-0 w-full z-50 bg-n-8/90 backdrop-blur-sm border-b border-n-6 lg:bg-n-8/90 lg:backdrop-blur-sm">
       <div className="flex items-center px-5 lg:px-7.5 xl:px-10 max-lg:py-4">
         <a className="block w-[12rem] xl:mr-8 " href="#hero">
           <img src={brainwave} width={190} height={40} alt="Logo" />
@@ -34,6 +33,16 @@ const Header = () => {
             ))}
           </div>
         </nav>
+        <a
+          href="#signup"
+          className="button hidden mr-8 text-n-1/50 transition-colors hover:text-color-1 lg:block"
+        >
+          New Account
+        </a>
+
+        <Button className="hidden lg:flex" href="#login">
+          Sign In
+        </Button>
       </div>
     </div>
   );
