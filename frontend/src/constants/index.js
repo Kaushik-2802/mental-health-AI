@@ -36,6 +36,7 @@ import {
   yourlogo,
 } from "../assets";
 
+// Navigation Bar Titles
 export const navigation = [
   {
     id: "0",
