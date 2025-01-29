@@ -134,8 +134,7 @@ export const collabText =
 export const collabContent = [
   {
     id: "0",
-    title: "Seamless Integration",
-    text: collabText,
+    title: " Highly Scalable ",
   },
   {
     id: "1",
