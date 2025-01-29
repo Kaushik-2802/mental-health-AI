@@ -36,6 +36,7 @@ import {
   yourlogo,
 } from "../assets";
 
+// Navigation Bar Titles
 export const navigation = [
   {
     id: "0",
@@ -244,16 +245,16 @@ export const pricing = [
 export const benefits = [
   {
     id: "0",
-    title: "Ask anything",
-    text: "Lets users quickly find answers to their questions without having to search through multiple sources.",
+    title: "Polarity Detection",
+    text: " Identifies the emotional polarity (positive, neutral, or negative) of each input and tracks entiment trends over time.",
     backgroundUrl: "./src/assets/benefits/card-1.svg",
     iconUrl: benefitIcon1,
     imageUrl: benefitImage2,
   },
   {
     id: "1",
-    title: "Improve everyday",
-    text: "The app uses natural language processing to understand user queries and provide accurate and relevant responses.",
+    title: " Keyword Extraction ",
+    text: " Extracts key mental health related phrases or entities, providing insights into recurring or significant concerns. ",
     backgroundUrl: "./src/assets/benefits/card-2.svg",
     iconUrl: benefitIcon2,
     imageUrl: benefitImage2,
@@ -261,16 +262,16 @@ export const benefits = [
   },
   {
     id: "2",
-    title: "Connect everywhere",
-    text: "Connect with the AI chatbot from anywhere, on any device, making it more accessible and convenient.",
+    title: "Concern Classifier",
+    text: " Categorizes concerns into predefined mental health issues such as Anxiety, Depression, Stress, Insomnia, or Eating Disorders.",
     backgroundUrl: "./src/assets/benefits/card-3.svg",
     iconUrl: benefitIcon3,
     imageUrl: benefitImage2,
   },
   {
     id: "3",
-    title: "Fast responding",
-    text: "Lets users quickly find answers to their questions without having to search through multiple sources.",
+    title: "Timeline-Based Sentiment Shift Analysis",
+    text: "Evaluates how sentiment, concerns, and intensity have evolved over a specified time period.",
     backgroundUrl: "./src/assets/benefits/card-4.svg",
     iconUrl: benefitIcon4,
     imageUrl: benefitImage2,
@@ -278,16 +279,16 @@ export const benefits = [
   },
   {
     id: "4",
-    title: "Ask anything",
-    text: "Lets users quickly find answers to their questions without having to search through multiple sources.",
+    title: "Intensity Scoring",
+    text: "Assigns a severity score (1-10) based on linguistic and contextual cues, indicating the seriousness of the user's concerns. ",
     backgroundUrl: "./src/assets/benefits/card-5.svg",
     iconUrl: benefitIcon1,
     imageUrl: benefitImage2,
   },
   {
     id: "5",
-    title: "Improve everyday",
-    text: "The app uses natural language processing to understand user queries and provide accurate and relevant responses.",
+    title: " Report Generation",
+    text: "The model later generates a report describing all of the mentioned features through graphs , pictures etc helping to quickly get overview of a user's mental state.",
     backgroundUrl: "./src/assets/benefits/card-6.svg",
     iconUrl: benefitIcon2,
     imageUrl: benefitImage2,
