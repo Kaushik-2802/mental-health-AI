@@ -16,7 +16,7 @@ const LandingPage = () => {
         <Hero />
         <Benefits />
         <Collaboration />
-        <Services />
+
         <Pricing />
         <Roadmap />
         <Footer />

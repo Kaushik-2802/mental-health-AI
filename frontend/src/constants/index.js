@@ -91,7 +91,7 @@ export const brainwaveServicesIcons = [
   chromecast,
   sliders04,
 ];
-
+// Roadmap - instead make them future goals
 export const roadmap = [
   {
     id: "0",
@@ -129,7 +129,7 @@ export const roadmap = [
 ];
 
 export const collabText =
-  "With smart automation and top-notch security, it's the perfect solution for teams looking to work smarter.";
+  "With smart report generation, mental health experts can suggest the best course of medication or therapy for their patients";
 
 export const collabContent = [
   {
@@ -138,7 +138,7 @@ export const collabContent = [
   },
   {
     id: "1",
-    title: "Smart Automation",
+    title: "Smart Report Generation",
   },
   {
     id: "2",
@@ -205,10 +205,11 @@ export const collabApps = [
   },
 ];
 
+// Instead of pricing , display tech stack
 export const pricing = [
   {
     id: "0",
-    title: "Basic",
+    title: "Frontend",
     description: "AI chatbot, personalized recommendations",
     price: "0",
     features: [
@@ -219,7 +220,7 @@ export const pricing = [
   },
   {
     id: "1",
-    title: "Premium",
+    title: "Backend",
     description: "Advanced AI chatbot, priority support, analytics dashboard",
     price: "9.99",
     features: [
@@ -230,7 +231,7 @@ export const pricing = [
   },
   {
     id: "2",
-    title: "Enterprise",
+    title: "Model",
     description: "Custom AI chatbot, advanced analytics, dedicated account",
     price: null,
     features: [
