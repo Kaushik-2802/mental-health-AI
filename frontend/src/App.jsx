@@ -1,14 +1,6 @@
-import ButtonGradient from "./assets/svg/ButtonGradient";
-import Benefits from "../src/components/Benifits";
-import Collaboration from "./components/Collaboration";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import Hero from "./components/Hero";
-import Pricing from "./components/Pricing";
-import Roadmap from "./components/Roadmap";
-import Services from "./components/Services";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
+import SignInPage from "./pages/SignInPage";
 
 const App = () => {
   return (
@@ -16,6 +8,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/chat" element={<LandingPage />} />
+        <Route path="/signin" element={<SignInPage />} />
       </Routes>
     </Router>
   );
