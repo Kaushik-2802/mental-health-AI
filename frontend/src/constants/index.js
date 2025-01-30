@@ -45,7 +45,7 @@ export const navigation = [
   },
   {
     id: "1",
-    title: "Pricing",
+    title: "TechStack",
     url: "#pricing",
   },
   {
@@ -95,35 +95,35 @@ export const brainwaveServicesIcons = [
 export const roadmap = [
   {
     id: "0",
-    title: "Voice recognition",
-    text: "Enable the chatbot to understand and respond to voice commands, making it easier for users to interact with the app hands-free.",
-    date: "May 2023",
-    status: "done",
+    title: "Voice integration",
+    text: "We are trying to implement Natural Language Processing (NLP) through text wherein the user simply records his text for explaining their mental situation.",
+    date: "Idea # 1 ",
+    status: "In Progress ",
     imageUrl: roadmap1,
     colorful: true,
   },
   {
     id: "1",
-    title: "Gamification",
-    text: "Add game-like elements, such as badges or leaderboards, to incentivize users to engage with the chatbot more frequently.",
-    date: "May 2023",
+    title: " Beyond Mental Health ",
+    text: "Extended to all health conditions that require continuous montoring for efficient data collection and analysis to help doctors get a better perspective of a patient.",
+    date: "Idea # 2",
     status: "progress",
     imageUrl: roadmap2,
   },
   {
     id: "2",
-    title: "Chatbot customization",
-    text: "Allow users to customize the chatbot's appearance and behavior, making it more engaging and fun to interact with.",
-    date: "May 2023",
-    status: "done",
+    title: " Mobile Application",
+    text: ' Enables seamless user interaction through the "KalRav" mobile app .',
+    date: "Idea # 3",
+    status: "In progress",
     imageUrl: roadmap3,
   },
   {
     id: "3",
-    title: "Integration with APIs",
-    text: "Allow the chatbot to access external data sources, such as weather APIs or news APIs, to provide more relevant recommendations.",
-    date: "May 2023",
-    status: "progress",
+    title: "Integration with chat apps",
+    text: "Create a plugin to integrate apps like whattsapp or facebook to enable voice and chat to enable user to interact without the need to install and login through web or mobile app . ",
+    date: "Idea # 4",
+    status: "In Progress",
     imageUrl: roadmap4,
   },
 ];
@@ -242,6 +242,7 @@ export const pricing = [
   },
 ];
 
+// Features of KalRav
 export const benefits = [
   {
     id: "0",
