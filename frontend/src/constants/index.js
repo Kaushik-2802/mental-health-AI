@@ -34,6 +34,9 @@ import {
   telegram,
   twitter,
   yourlogo,
+  mentalhealthawarenessribbon,
+  brainicon,
+  butterfly,
 } from "../assets";
 
 // Navigation Bar Titles
@@ -48,24 +51,20 @@ export const navigation = [
     title: "TechStack",
     url: "#pricing",
   },
+
   {
     id: "2",
-    title: "How to use",
-    url: "#how-to-use",
-  },
-  {
-    id: "3",
-    title: "Roadmap",
+    title: "Future",
     url: "#roadmap",
   },
   {
-    id: "4",
+    id: "3",
     title: "New account",
     url: "#signup",
     onlyMobile: true,
   },
   {
-    id: "5",
+    id: "4",
     title: "Sign in",
     url: "/signin",
     onlyMobile: true,
@@ -149,22 +148,22 @@ export const collabContent = [
 export const collabApps = [
   {
     id: "0",
-    title: "Figma",
-    icon: figma,
+    title: "Mental Health Awareness",
+    icon: mentalhealthawarenessribbon,
     width: 26,
     height: 36,
   },
   {
     id: "1",
-    title: "Notion",
-    icon: notion,
+    title: "Brain",
+    icon: brainicon,
     width: 34,
     height: 36,
   },
   {
     id: "2",
-    title: "Discord",
-    icon: discord,
+    title: "Butterfly",
+    icon: butterfly,
     width: 36,
     height: 28,
   },

@@ -76,7 +76,11 @@ import telegram from "./socials/telegram.svg";
 import twitter from "./socials/twitter.svg";
 import teamwork from "../assets/teamwork.svg";
 import signup from "../assets/signup-background.svg";
+import mentalhealthawarenessribbon from "../assets/mentalhealthawarenessribbon.svg";
+import brainicon from "../assets/brainicon.svg";
+import butterfly from "../assets/butterfly.svg";
 export {
+  butterfly,
   brainwave,
   check,
   check2,
@@ -120,6 +124,8 @@ export {
   coins,
   done,
   hero,
+  mentalhealthawarenessribbon,
+  brainicon,
   roadmap1,
   roadmap2,
   roadmap3,
