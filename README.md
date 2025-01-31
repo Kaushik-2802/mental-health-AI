@@ -64,11 +64,11 @@ Kalrav is a web-based application equipped with a Natural Language Processing (N
 
 ## 🔗 Links
 
-- [Project Repository](https://github.com/your-repo-link)
+- [Project Repository](https://github.com/Kaushik-2802/mental-health-AI)
 - [Live Demo](https://your-live-demo-link)
 
 ## 👨‍💻 Collaborators
 
-- [Collaborator 1 Name](https://github.com/collaborator1)
-- [Collaborator 2 Name](https://github.com/collaborator2)
-- [Collaborator 3 Name](https://github.com/collaborator3)
+- [Teja Srinivas](https://github.com/collaborator1)
+- [Komaravolu Kaushik](https://github.com/collaborator2)
+- [Soham Chitimali](https://github.com/collaborator3)
