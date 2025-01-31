@@ -41,7 +41,7 @@ const Hero = () => {
             world where AI meets empathy, offering real-time insights and
             personalized support for a healthier mind.
           </p>
-          <Button href="/pricing" white>
+          <Button href="/signin" white>
             Get started
           </Button>
         </div>
