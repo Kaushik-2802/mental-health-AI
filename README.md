@@ -69,6 +69,6 @@ Kalrav is a web-based application equipped with a Natural Language Processing (N
 
 ## 👨‍💻 Collaborators
 
-- [Teja Srinivas](https://github.com/collaborator1)
-- [Komaravolu Kaushik](https://github.com/collaborator2)
-- [Soham Chitimali](https://github.com/collaborator3)
+- [Teja Srinivas](https://github.com/devTejaSrinivas)
+- [Komaravolu Kaushik](https://github.com/Kaushik-2802)
+- [Soham Chitimali](https://github.com/sohamchitimali)
