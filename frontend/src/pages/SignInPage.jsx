@@ -2,8 +2,12 @@ import React from "react";
 import { teamwork, signup } from "../assets/";
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
+
+
 
 const SignInPage = () => {
+  const navigate = useNavigate();
   return (
     <div className="bg-gradient-to-r from-[#F28383] from-10% via-[#9D6CD2] via-30% to-[#481EDC] to-90% flex items-center justify-center min-h-screen p-4">
       <div className="max-w-[960px] bg-black-dark grid grid-cols-1 md:grid-cols-2 items-center gap-10 md:gap-20 p-5 rounded-2xl relative">
@@ -44,7 +48,7 @@ const SignInPage = () => {
                 className="w-full bg-white-light text-black py-2 pl-12 pr-4 rounded-full focus:bg-white focus:outline-none focus:ring-1 focus:ring-neon-blue focus:drop-shadow-lg"
               />
             </div>
-            <button className="bg-gradient-to-r from-blue-400 to-cyan-200 w-full font-semibold rounded-full py-2">
+            <button className="bg-gradient-to-r from-blue-400 to-cyan-200 w-full font-semibold rounded-full py-2" onClick={() => navigate("/chat")}>
               Sign in
             </button>
           </form>

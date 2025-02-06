@@ -1,48 +1,29 @@
 import React, { useState } from 'react';
 import { MessageSquare, Search, Send, Settings, Users, Menu, X } from 'lucide-react';
+import { brainwaveSymbol } from "../assets";
+import { useNavigate } from 'react-router-dom';
+
+const now = new Date();
+const hours = now.getHours(); // Get the hours (0-23)
+const minutes = now.getMinutes(); // Get the minutes (0-59)
 
 function ChatPage() {
+
+  const navigate = useNavigate();
+
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [currentMessage, setCurrentMessage] = useState('');
   const [activeChat, setActiveChat] = useState(1);
   const [chats, setChats] = useState([
     {
       id: 1,
-      name: "Sarah Wilson",
-      lastMessage: "See you tomorrow!",
+      name: "KalRav",
+      lastMessage: "",
       time: "12:30 PM",
       unread: 2,
       avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150",
       messages: [
-        { id: 1, text: "Hey there! How are you?", sender: "other", time: "12:30 PM" },
-        { id: 2, text: "I'm doing great, thanks! How about you?", sender: "user", time: "12:31 PM" },
-        { id: 3, text: "Pretty good! Working on some new features.", sender: "other", time: "12:32 PM" }
-      ]
-    },
-    {
-      id: 2,
-      name: "Tech Team",
-      lastMessage: "New project update",
-      time: "11:45 AM",
-      unread: 0,
-      avatar: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=150",
-      messages: [
-        { id: 1, text: "Team meeting at 3 PM", sender: "other", time: "11:30 AM" },
-        { id: 2, text: "I'll prepare the presentation", sender: "user", time: "11:35 AM" },
-        { id: 3, text: "Great, thanks!", sender: "other", time: "11:45 AM" }
-      ]
-    },
-    {
-      id: 3,
-      name: "John Davis",
-      lastMessage: "Thanks for your help!",
-      time: "Yesterday",
-      unread: 0,
-      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150",
-      messages: [
-        { id: 1, text: "Can you help me with the project?", sender: "other", time: "Yesterday" },
-        { id: 2, text: "Sure, what do you need?", sender: "user", time: "Yesterday" },
-        { id: 3, text: "Thanks for your help!", sender: "other", time: "Yesterday" }
+        { id: 1, text: "Hi there! How are you feeling today? Let me know how your day has been so far.", sender: "other", time: `${hours}:${minutes}` }
       ]
     }
   ]);
@@ -80,9 +61,9 @@ function ChatPage() {
       const responses = [
         "That's interesting!",
         "Thanks for letting me know.",
-        "I'll get back to you on that.",
         "Sounds good!",
-        "Great idea!"
+        "Great keep it up!",
+        "Please click on the report button to get your mental health report."
       ];
       const randomResponse = responses[Math.floor(Math.random() * responses.length)];
       
@@ -118,7 +99,7 @@ function ChatPage() {
   };
 
   return (
-    <div className="h-screen flex bg-gray-100">
+    <div className="h-screen flex bg-n-6">
       {/* Mobile Sidebar Toggle */}
       <button 
         className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-lg"
@@ -128,26 +109,19 @@ function ChatPage() {
       </button>
 
       {/* Sidebar */}
-      <div className={`${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 transform transition-transform duration-300 ease-in-out fixed lg:relative w-80 h-full bg-white border-r border-gray-200 z-40`}>
+      <div className={`${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 transform transition-transform duration-300 ease-in-out fixed lg:relative w-80 h-full bg-n-7 border-r border-gray-200 z-40`}>
         <div className="p-4">
           <div className="flex items-center justify-between mb-6">
-            <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-              <MessageSquare className="text-blue-600" />
-              ChatApp
+            <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+              <MessageSquare className="text-blue-400" />
+              Kalrav
             </h1>
             <button className="p-2 hover:bg-gray-100 rounded-full">
-              <Settings size={20} className="text-gray-600" />
+              <Settings size={20} className="text-gray-400" />
             </button>
           </div>
 
-          <div className="relative mb-6">
-            <input
-              type="text"
-              placeholder="Search conversations..."
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-            />
-            <Search className="absolute left-3 top-2.5 text-gray-400" size={20} />
-          </div>
+          
 
           <div className="space-y-4">
             {chats.map((chat) => (
@@ -158,21 +132,31 @@ function ChatPage() {
                 }`}
                 onClick={() => handleChatSelect(chat.id)}
               >
-                <img src={chat.avatar} alt={chat.name} className="w-12 h-12 rounded-full object-cover" />
+                <img src={brainwaveSymbol} alt={chat.name} className="w-12 h-12 rounded-full object-cover" />
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-start">
                     <h3 className="font-semibold text-gray-900 truncate">{chat.name}</h3>
                     <span className="text-sm text-gray-500">{chat.time}</span>
                   </div>
                   <p className="text-sm text-gray-600 truncate">{chat.lastMessage}</p>
+
+                  
+
                 </div>
+                
                 {chat.unread > 0 && (
                   <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
                     {chat.unread}
                   </span>
                 )}
+
+                
               </div>
             ))}
+            <button className="bg-purple-800 w-full text-white p-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2 justify-center" onClick={() => navigate("/report")}>
+                    <img src={brainwaveSymbol} alt="Icon" width="20" height="20" />
+                    <span className="text-lg">Get Report</span>
+                  </button>
           </div>
         </div>
       </div>
@@ -180,16 +164,16 @@ function ChatPage() {
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col h-full">
         {/* Chat Header */}
-        <div className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+        <div className="bg-n-7 border-b border-gray-200 px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img
-              src={activeConversation.avatar}
+              src={brainwaveSymbol}
               alt={activeConversation.name}
               className="w-10 h-10 rounded-full object-cover"
             />
             <div>
-              <h2 className="font-semibold text-gray-900">{activeConversation.name}</h2>
-              <p className="text-sm text-gray-500">Online</p>
+              <h2 className="font-semibold text-white">{activeConversation.name}</h2>
+              <p className="text-sm text-white">Online</p>
             </div>
           </div>
           <button className="p-2 hover:bg-gray-100 rounded-full">
@@ -221,14 +205,14 @@ function ChatPage() {
         </div>
 
         {/* Message Input */}
-        <form onSubmit={handleSendMessage} className="bg-white border-t border-gray-200 p-4">
+        <form onSubmit={handleSendMessage} className="bg-n-7 border-t border-gray-200 p-4">
           <div className="flex items-center gap-4">
             <input
               type="text"
               value={currentMessage}
               onChange={(e) => setCurrentMessage(e.target.value)}
               placeholder="Type your message..."
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 bg-n-7"
             />
             <button
               type="submit"
@@ -236,6 +220,13 @@ function ChatPage() {
             >
               <Send size={20} />
             </button>
+
+            <button className="bg-purple-800 text-white p-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2" onClick={() => navigate("/report")}>
+              <img src={brainwaveSymbol} alt="Icon" width="20" height="20" />
+              <span>Get Report</span>
+            </button>
+
+           
           </div>
         </form>
       </div>
