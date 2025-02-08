@@ -1,27 +1,58 @@
-import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 
 const ReportPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [chartData, setChartData] = useState([]);
   const analysisData = location.state?.analysisData || null;
 
   if (!analysisData) {
     return (
       <div className="p-6 text-center">
         <h2 className="text-2xl font-bold">No Data Available</h2>
-        <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg" onClick={() => navigate(-1)}>Back</button>
+        <button
+          className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg"
+          onClick={() => navigate(-1)}
+        >
+          Back
+        </button>
       </div>
     );
   }
 
   const { concern_categories, concerns, intensity_scores, keywords, response_message, sentiment } = analysisData;
 
+  // Simulating timestamps (You should replace this with actual timestamps from your backend)
+  useEffect(() => {
+    const newEntry = {
+      timestamp: new Date().toLocaleTimeString(),
+      intensity: Object.values(intensity_scores)[0], // Assuming one concern at a time
+    };
+
+    setChartData((prevData) => [...prevData, newEntry]);
+  }, [analysisData]);
+
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4">Generated Report</h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Line Chart for Intensity over Time */}
+      <div className="border border-gray-300 p-4 rounded-lg shadow-lg">
+        <h3 className="text-lg font-semibold mb-2">Intensity Over Time</h3>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={chartData}>
+            <XAxis dataKey="timestamp" />
+            <YAxis domain={[0, 10]} />
+            <Tooltip />
+            <CartesianGrid stroke="#ccc" />
+            <Line type="monotone" dataKey="intensity" stroke="#8884d8" strokeWidth={2} />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
         {/* Concern Categories */}
         <div className="border border-gray-300 p-4 rounded-lg shadow-lg">
           <h3 className="text-lg font-semibold">Concern Categories</h3>
@@ -77,7 +108,10 @@ const ReportPage = () => {
         </div>
       </div>
 
-      <button className="mt-6 bg-blue-600 text-white px-4 py-2 rounded-lg" onClick={() => navigate(-1)}>
+      <button
+        className="mt-6 bg-blue-600 text-white px-4 py-2 rounded-lg"
+        onClick={() => navigate(-1)}
+      >
         Back
       </button>
     </div>
