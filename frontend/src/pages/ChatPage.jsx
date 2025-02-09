@@ -148,8 +148,11 @@ function ChatPage() {
               <Settings size={20} className="text-gray-400" />
             </button>
           </div>
+          
 
           <div className="space-y-4">
+
+            
             {chats.map((chat) => (
 
               <div
@@ -183,6 +186,15 @@ function ChatPage() {
                 )}
               </div>
             ))}
+
+            <button 
+            className="bg-purple-800 text-white text-2xl p-2 rounded-lg mx-auto inline-flex w-full justify-center" 
+            onClick={() => navigate("/report")}
+               >
+             <img src={brainwaveSymbol}  className="w-10 h-10 rounded-full object-cover mr-1" />
+             <div className="mt-0.5">Report</div>
+
+          </button>
           </div>
         </div>
       </div>
@@ -258,19 +270,20 @@ function ChatPage() {
           >
             <Send size={20} />
           </button>
+
+          <button 
+            className="bg-purple-800 text-white text-xl p-2 rounded-lg mx-auto inline-flex " 
+            onClick={() => navigate("/report")}
+          >
+             <img src={brainwaveSymbol}  className="w-8 h-8 rounded-full object-cover mr-1" />
+             <div className="mt-0.5">Report</div>
+          </button>
+
         </form>
 
-        {/* View Report Button */}
-        {analysisData && (
-
-          <button
-            className="bg-purple-800 text-white p-2 rounded-lg mx-auto mt-4 mb-4"
-
-            onClick={() => navigate("/report", { state: { analysisData } })}
-          >
-            View Report
-          </button>
-        )}
+        
+         
+        
       </div>
     </div>
   );
