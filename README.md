@@ -17,11 +17,12 @@
 
 ## 📋 Table of Contents
 
-- [Introduction](#introduction)
-- [Tech Stack](#tech-stack)
-- [Features](#features)
-- [Links](#links)
-- [Collaborators](#collaborators)
+- [Introduction](#-introduction)
+- [Tech Stack](#️-tech-stack)
+- [Features](#-features)
+- [Links](#-links)
+- [Collaborators](#-collaborators)
+- [Contribution Guidelines](#repository-contribution-guidelines)
 
 ## 🤖 Introduction
 
@@ -72,3 +73,71 @@ Kalrav is a web-based application equipped with a Natural Language Processing (N
 - [Teja Srinivas](https://github.com/devTejaSrinivas)
 - [Komaravolu Kaushik](https://github.com/Kaushik-2802)
 - [Soham Chitimali](https://github.com/sohamchitimali)
+
+# Repository Contribution Guidelines
+
+1. **Reporting Issues**
+
+   - Any bug, issue, feature request, etc., must be raised in the issues section of GitHub.
+   - Please do not send them as WhatsApp chats.
+   - Describe in detail the issue with pictures.
+   - The issues will be assigned or labelled accordingly.
+
+2. **Forking the Repository**
+
+   - Each developer should fork the main repository instead of cloning it directly (Not Applicable for Kaushik) and then create and maintain a single local copy of the fork (on your local machine).
+
+     ```sh
+     git clone <repo-url>
+     ```
+
+     wherein repo URL is of your forked copy (Do not clone directly).
+
+3. **Creating Branches**
+
+   - Each developer should create a new branch in the format:
+     ```sh
+     --> <name>/<task working upon>
+     ```
+   - Examples:
+     ```sh
+     - teja/landingpage
+     - kaushik/named-entity-recognition
+     - soham/mail-feature
+     ```
+   - Each developer should make such branches and make changes only in those branches.
+   - After all changes are done, push _only that branch_ into the GitHub Repository.
+     ```sh
+     git push origin <Branch Name>
+     ```
+   - Do not make changes to the main branch in your repo or on the GitHub repo.
+   - If your branch solves some bug or addresses a feature request, make a Pull Request (PR) and mention the issue number it fixes. You can find some resources on how to do it easily online.
+
+4. **Syncing with Main Branch**
+
+   - Whenever you are working on the main branch, pull the changes using the below command, as others might have merged some of their branches. Follow these steps:
+     1. Go to GitHub to your forked copy of your repo and then "sync" the repo to bring in the latest changes. Next, go to your local copy of the repo and do the following:
+     2. ```sh
+        git checkout main
+        ```
+     3. ```sh
+        git pull origin main
+        ```
+     4. ```sh
+        git checkout <branch-name>
+        ```
+     5. ```sh
+        git merge main
+        ```
+   - Please follow the above steps every time you start working irrespective of changes or not. It will ensure that the latest changes are present in your changes and help you fix any conflicts while merging or in the later stages.
+
+5. **Post-Merge Notification**
+
+   - After merging the PR, notify the developers by sending a WhatsApp Message or tag the developers in the description of the PR.
+   - This informs developers about the latest activity in the repo.
+   - Others can immediately review your code and test whether these changes are working or whether we need to revert.
+   - **Do not delete the branches immediately. Please wait until testing and review are finished completely.**
+
+6. **Testing Your Branch**
+   - Please test your branch multiple times before merging.
+   - Reverting is a tedious task that wastes a lot of time.
