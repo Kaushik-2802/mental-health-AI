@@ -9,7 +9,6 @@ function SignUpPage() {
     >
       <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row w-10/12 lg:w-8/12 bg-white rounded-xl mx-auto shadow-lg overflow-hidden">
-          {/* Left Image Section */}
           <div
             className="w-full lg:w-1/2 flex flex-col items-center justify-start p-12 bg-no-repeat bg-cover bg-center"
             style={{
@@ -19,15 +18,14 @@ function SignUpPage() {
           >
             <h1 className="text-white text-3xl font-bold mt-5">Welcome</h1>
             <p className="text-white text-center px-4 mt-2">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-              suspendisse aliquam varius rutrum purus maecenas ac{" "}
-              <a href="#" className="text-yellow-300 font-semibold underline">
+              Monitor your mental health effectively through KalRav . Click here
+              to &nbsp;
+              <a href="#" className="text-purple-500 font-semibold underline">
                 Learn more
               </a>
             </p>
           </div>
 
-          {/* Right Form Section */}
           <div className="w-full lg:w-1/2 py-12 px-8">
             <h2 className="text-4xl font-bold text-gray-800 mb-4 text-center">
               Register
