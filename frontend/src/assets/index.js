@@ -79,6 +79,8 @@ import signup from "../assets/signup-background.svg";
 import mentalhealthawarenessribbon from "../assets/mentalhealthawarenessribbon.svg";
 import brainicon from "../assets/brainicon.svg";
 import butterfly from "../assets/butterfly.svg";
+import registerbackground from "../assets/Register-Background.png";
+
 export {
   butterfly,
   brainwave,
@@ -125,6 +127,7 @@ export {
   done,
   hero,
   mentalhealthawarenessribbon,
+  registerbackground,
   brainicon,
   roadmap1,
   roadmap2,
