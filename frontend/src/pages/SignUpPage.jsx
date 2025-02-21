@@ -18,9 +18,9 @@ function SignUpPage() {
           >
             <h1 className="text-white text-3xl font-bold mt-5">Welcome</h1>
             <p className="text-white text-center px-4 mt-2">
-              Monitor your mental health effectively through KalRav . Click here
+              Monitor your mental health effectively through KalRav. Click here
               to &nbsp;
-              <a href="#" className="text-purple-500 font-semibold underline">
+              <a href="/" className="text-purple-500 font-semibold underline">
                 Learn more
               </a>
             </p>
