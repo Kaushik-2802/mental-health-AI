@@ -31,12 +31,15 @@ function SignUpPage() {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/register", {
-        firstname: formData.firstname,
-        surname: formData.surname,
-        email: formData.email,
-        password: formData.password,
-      });
+      const response = await axios.post(
+        "https://mental-health-ai-rilr.onrender.com/register",
+        {
+          firstname: formData.firstname,
+          surname: formData.surname,
+          email: formData.email,
+          password: formData.password,
+        }
+      );
 
       setSuccessMessage(response.data.message);
       setFormData({
