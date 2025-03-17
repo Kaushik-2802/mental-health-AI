@@ -150,10 +150,11 @@ def generate_response_based_on_sentiment(sentiment):
 
 
 if __name__ == '__main__':
-    if os.getenv("RENDER"):  # Render sets this variable
+    port = int(os.environ.get("PORT", 5000))  # Render assigns a PORT dynamically
+    if os.getenv("RENDER"):  # Running on Render
         from gunicorn.app.wsgiapp import run
+        os.environ["GUNICORN_CMD_ARGS"] = f"-b 0.0.0.0:{port} -w 4"  # Bind to Render port
         run()
     else:
         from waitress import serve  # Use Waitress for local Windows testing
-        serve(app, host="0.0.0.0", port=5000)
-
+        serve(app, host="0.0.0.0", port=port)
