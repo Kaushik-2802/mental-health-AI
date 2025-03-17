@@ -148,5 +148,12 @@ def generate_response_based_on_sentiment(sentiment):
     }
     return responses.get(sentiment, "I'm here to help. Feel free to share more.")
 
+
 if __name__ == '__main__':
-    app.run(debug=True, threaded=True)
+    if os.getenv("RENDER"):  # Render sets this variable
+        from gunicorn.app.wsgiapp import run
+        run()
+    else:
+        from waitress import serve  # Use Waitress for local Windows testing
+        serve(app, host="0.0.0.0", port=5000)
+
