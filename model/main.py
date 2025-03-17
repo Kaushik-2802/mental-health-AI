@@ -6,14 +6,21 @@ from timeline_analysis import TimelineSentimentAnalyzer
 from pymongo import MongoClient
 import datetime
 import google.generativeai as genai
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+API_KEY = os.getenv("API_KEY")
 
 app = Flask(__name__)
 CORS(app)
 
-genai.configure(api_key="AIzaSyDtGmDCcWiNHm5NBk4KWrWFr8-xUNYlIPE")
+genai.configure(api_key=API_KEY)
 chat_sessions = {}
 # Initialize MongoDB Connection
-client = MongoClient("mongodb://localhost:27017/")
+ATLAS_URI = "mongodb+srv://administrator:administrator@kalravcluster1.h3fsh.mongodb.net/?retryWrites=true&w=majority&appName=KalRavCluster1"
+client = MongoClient(ATLAS_URI)
 db = client["mental_health_db"]
 collection = db["user_inputs"]
 
