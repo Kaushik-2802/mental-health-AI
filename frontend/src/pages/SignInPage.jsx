@@ -65,8 +65,8 @@ const SignInPage = () => {
             <p>
               Don't have an account?{" "}
               <a
-                href="/signup"
                 className="text-neon-blue font-semibold cursor-pointer"
+                onClick={() => navigate("/signup")}
               >
                 Sign up
               </a>

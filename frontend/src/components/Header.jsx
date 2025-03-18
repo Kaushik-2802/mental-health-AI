@@ -15,6 +15,10 @@ const Header = () => {
     navigate("/signin");
   };
 
+  const handleSignUp = () => {
+    navigate("/signup");
+  };
+
   const pathname = useLocation();
   const [openNavigation, setOpenNavigation] = useState(false);
 
@@ -74,8 +78,8 @@ const Header = () => {
         </nav>
 
         <a
-          href="/signup"
-          className="button hidden mr-8 text-n-1/50 transition-colors hover:text-n-1 lg:block"
+          className="button hidden mr-8 text-n-1/50 transition-colors hover:text-n-1 lg:block cursor-pointer"
+          onClick={handleSignUp}
         >
           New account
         </a>
