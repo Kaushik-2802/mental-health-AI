@@ -23,10 +23,13 @@ function ChatPage() {
   const [analysisData, setAnalysisData] = useState(null);
   const [activeChat, setActiveChat] = useState(1);
   const [loading, setLoading] = useState(false);
-  const model = genAI.getGenerativeModel({ model: "models/gemini-2.0-flash-lite" });
-  
+  const model = genAI.getGenerativeModel({
+    model: "models/gemini-2.0-flash-lite",
+  });
+
   // Initial context prompt
-  const contextPrompt = "You now need to act like a professional mental health expert and figure out all the emotions of the user by asking a set of questions one by one (have a genuine and purposeful conversation and DO NOT ASK ALL OF YOUR QUESTIONS AT ONCE), so ask the questions carefully so you can extract feelings from the user. Once you believe the conversation is worth ending, say thank you and ask the user to generate their report but before that keep your messages concise(max 20 words only don't exceed), and also ask subsequent questions do not give any recommendations on what to do just do your best to discover the emotions of the user.";
+  const contextPrompt =
+    "You now need to act like a professional mental health expert and figure out all the emotions of the user by asking a set of questions one by one (have a genuine and purposeful conversation and DO NOT ASK ALL OF YOUR QUESTIONS AT ONCE), so ask the questions carefully so you can extract feelings from the user. Once you believe the conversation is worth ending, say thank you and ask the user to generate their report but before that keep your messages concise(max 20 words only don't exceed), and also ask subsequent questions do not give any recommendations on what to do just do your best to discover the emotions of the user.";
 
   // Load model chats from localStorage for Gemini API conversation history
   const [modelChats, setModelChats] = useState(() => {
@@ -37,7 +40,7 @@ function ChatPage() {
           {
             role: "user",
             parts: [{ text: contextPrompt }],
-          }
+          },
         ];
   });
 
@@ -92,7 +95,7 @@ function ChatPage() {
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (!currentMessage.trim()) return;
-    
+
     setLoading(true);
 
     const userMessage = {
@@ -125,7 +128,7 @@ function ChatPage() {
       {
         role: "user",
         parts: [{ text: currentMessage }],
-      }
+      },
     ];
     setModelChats(updatedModelChats);
 
@@ -133,7 +136,7 @@ function ChatPage() {
 
     try {
       const response = await axios.post(
-        "https://localhost:5000/api/process_input",
+        "https://mental-health-ai-rilr.onrender.com/api/process_input",
         {
           sentence: userMessage.text,
         }
@@ -144,13 +147,13 @@ function ChatPage() {
 
       // Create a new chat with the updated history
       const chat = model.startChat({
-        history: updatedModelChats
+        history: updatedModelChats,
       });
 
       // Send the message and get the response
       const result = await chat.sendMessage(userMessage.text);
       const textres = result.response.text();
-      
+
       // Create bot message for UI
       const botMessage = {
         id: activeConversation.messages.length + 2,
@@ -177,9 +180,8 @@ function ChatPage() {
         {
           role: "model",
           parts: [{ text: textres }],
-        }
+        },
       ]);
-
     } catch (error) {
       console.error("Error sending message:", error);
       // Consider adding error handling UI feedback here
@@ -267,17 +269,16 @@ function ChatPage() {
               </button>
             )}
 
-          <button
-                className="bg-red-800 text-white text-2xl p-2 rounded-lg mx-auto inline-flex w-full justify-center"
-                onClick={() => navigate("/signin")}
-              >
-                <img
-                  src={brainwaveSymbol}
-                  className="w-10 h-10 rounded-full object-cover mr-1"
-                />
-                <div className="mt-0.5">signout</div>
-              </button>
-            
+            <button
+              className="bg-red-800 text-white text-2xl p-2 rounded-lg mx-auto inline-flex w-full justify-center"
+              onClick={() => navigate("/signin")}
+            >
+              <img
+                src={brainwaveSymbol}
+                className="w-10 h-10 rounded-full object-cover mr-1"
+              />
+              <div className="mt-0.5">signout</div>
+            </button>
           </div>
         </div>
       </div>
@@ -320,7 +321,9 @@ function ChatPage() {
                     : "bg-gray-800 text-white rounded-r-lg rounded-tl-lg"
                 } px-4 py-2`}
               >
-                <p><ReactMarkdown>{message.text}</ReactMarkdown></p>
+                <p>
+                  <ReactMarkdown>{message.text}</ReactMarkdown>
+                </p>
                 <span
                   className={`text-xs ${
                     message.sender === "user"
@@ -333,25 +336,25 @@ function ChatPage() {
               </div>
             </div>
           ))}
-            {loading && (
-          <div className="mr-auto bg-gray-800 text-white p-3 rounded-lg flex items-center space-x-2 max-w-[10%]">
-            <div className="flex space-x-1">
-              <div
-                className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
-                style={{ animationDelay: "0ms" }}
-              ></div>
-              <div
-                className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
-                style={{ animationDelay: "150ms" }}
-              ></div>
-              <div
-                className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
-                style={{ animationDelay: "300ms" }}
-              ></div>
+          {loading && (
+            <div className="mr-auto bg-gray-800 text-white p-3 rounded-lg flex items-center space-x-2 max-w-[10%]">
+              <div className="flex space-x-1">
+                <div
+                  className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                  style={{ animationDelay: "0ms" }}
+                ></div>
+                <div
+                  className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                  style={{ animationDelay: "150ms" }}
+                ></div>
+                <div
+                  className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                  style={{ animationDelay: "300ms" }}
+                ></div>
+              </div>
+              <span className="text-sm text-gray-400">Thinking...</span>
             </div>
-            <span className="text-sm text-gray-400">Thinking...</span>
-          </div>
-        )}
+          )}
         </div>
 
         <form
