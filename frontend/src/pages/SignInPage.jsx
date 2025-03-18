@@ -49,7 +49,7 @@ const SignInPage = () => {
             <div className="space-y-4">
               <button
                 className="bg-gradient-to-r from-blue-400 to-cyan-200 w-full font-semibold rounded-full py-2"
-                onClick={() => navigate("/chat")}
+                onClick={() => navigate("/chat?")}
               >
                 Sign in as Patient
               </button>
