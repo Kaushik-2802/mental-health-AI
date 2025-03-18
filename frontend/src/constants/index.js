@@ -209,34 +209,36 @@ export const pricing = [
   {
     id: "0",
     title: "Frontend",
-    description: "AI chatbot, personalized recommendations",
+    description:
+      "User interface and experience layer with AI-powered interactions",
     price: "0",
     features: [
-      "An AI chatbot that can understand your queries",
-      "Personalized recommendations based on your preferences",
-      "Ability to explore the app and its features without any cost",
+      "A visually engaging AI chatbot integrated into the user interface for seamless interactions.",
+      "Dynamic and responsive UI that provides personalized recommendations based on user behavior.",
+      "Access to explore the app’s design, layout, and interactive components at no cost.",
     ],
   },
   {
     id: "1",
     title: "Backend",
-    description: "Advanced AI chatbot, priority support, analytics dashboard",
+    description: "Server-side logic, database management, and API handling",
     price: "9.99",
     features: [
-      "An advanced AI chatbot that can understand complex queries",
-      "An analytics dashboard to track your conversations",
-      "Priority support to solve issues quickly",
+      "A powerful backend system that processes user queries and communicates with the AI model.",
+      "A secure and scalable analytics dashboard to track and manage chatbot conversations.",
+      "Priority support for backend infrastructure, ensuring high availability and issue resolution.",
     ],
   },
   {
     id: "2",
     title: "Model",
-    description: "Custom AI chatbot, advanced analytics, dedicated account",
+    description:
+      "Core AI engine with advanced NLP, training, and customization",
     price: null,
     features: [
-      "An AI chatbot that can understand your queries",
-      "Personalized recommendations based on your preferences",
-      "Ability to explore the app and its features without any cost",
+      "A machine learning-powered AI chatbot that understands and processes natural language queries.",
+      "Advanced AI training and fine-tuning capabilities for domain-specific customization.",
+      "A dedicated AI pipeline optimized for real-time decision-making and predictive analytics.",
     ],
   },
 ];
