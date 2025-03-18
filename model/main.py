@@ -26,32 +26,50 @@ collection = db["user_inputs"]
 
 timeline_analyzer = TimelineSentimentAnalyzer()
 INITIAL_QUESTION = "Hi! Let's begin. How are you feeling today?"
+def generate_response_based_on_sentiment(user_input, sentiment):
+    """Generate a response from Gemini based on user input and sentiment, focusing on providing help and guidance."""
+    model = genai.GenerativeModel("gemini-1.5-pro")
+    
+    # Create a prompt to provide a detailed and helpful response
+    prompt = f"""
+    The user said: "{user_input}"
+    The detected sentiment is: {sentiment}
 
-# @app.route('/api/conversational_chat', methods=['POST'])
-# def conversational_chat():
-#     data = request.json
-#     session_id = data.get("session_id")  # Unique session ID for the user
-#     user_response = data.get("sentence")
+    Please respond in three parts:
+    1. Provide a brief but warm acknowledgment of their feelings.
+    2. Offer specific, practical steps they can take to improve or maintain their emotional well-being.
+    3. Include a final encouraging statement that reassures them.
 
-#     # Initialize session if not exists
-#     if session_id not in chat_sessions:
-#         chat_sessions[session_id] = [{"role": "bot", "text": INITIAL_QUESTION}]
+    If the sentiment is positive, acknowledge and encourage maintaining it with good habits.
+    If the sentiment is negative, offer supportive guidance and coping strategies.
+    Keep the response under 200 words, and make it clear, actionable, and conversational.
+    """
 
-#     conversation = chat_sessions[session_id]
+    try:
+        response = model.generate_content(prompt)
+        if response and response.text:
+            return response.text.strip()
+    except Exception as e:
+        print(f"Error generating response: {e}")
 
-#     # Append user response
-#     conversation.append({"role": "user", "text": user_response})
+    # Default fallback responses
+    if sentiment.lower() == "negative":
+        return (
+            "I'm here for you. It sounds like you’re going through a tough time. "
+            "Try taking deep breaths, journaling your thoughts, or reaching out to a friend or professional. "
+            "You're not alone, and things can improve with small steps."
+        )
+    elif sentiment.lower() == "positive":
+        return (
+            "That's great to hear! Keep nurturing your positivity by practicing gratitude, "
+            "engaging in activities that bring you joy, and staying connected with supportive people."
+        )
+    else:
+        return (
+            "I hear you. Consider taking some time for yourself today—whether it's a short break, "
+            "listening to your favorite music, or simply reflecting on your emotions. Self-care is important."
+        )
 
-#     # Generate next chatbot response
-#     model = genai.GenerativeModel("gemini-pro")
-#     prompt = "\n".join([f"{m['role']}: {m['text']}" for m in conversation])
-#     response = model.generate_content(prompt)
-#     chatbot_reply = response.text.strip()
-
-#     # Append chatbot response
-#     conversation.append({"role": "bot", "text": chatbot_reply})
-
-#     return jsonify({"response_message": chatbot_reply, "conversation": conversation})
 
 @app.route('/api/process_input', methods=['POST'])
 def process_input():
@@ -66,11 +84,13 @@ def process_input():
 
     if user_input.lower() == 'report':
         return jsonify({"report": timeline_analyzer.generate_graph("daily")})
+    
 
     sentiment, keywords = get_sentiment(user_input)
     concerns = extract_mental_health_concerns(user_input)
     concern_categories = {concern: classify_concern(concern) for concern in concerns}
     concern_intensities = {concern: score_intensity(concern) for concern in concerns}
+    response_message=generate_response_based_on_sentiment(user_input,sentiment)
 
     # Store input data in MongoDB
     entry = {
@@ -86,7 +106,7 @@ def process_input():
 
     timeline_analyzer.add_input(1, user_input, concerns, concern_categories, concern_intensities)
 
-    response_message = generate_response_based_on_sentiment(sentiment)
+    
 
     response = {
         "sentiment": sentiment,
@@ -137,16 +157,7 @@ def get_history():
     else:
         return jsonify({"error": "No historical data available."})
 
-def generate_response_based_on_sentiment(sentiment):
-    """
-    Generate a chatbot response based on the sentiment.
-    """
-    responses = {
-        "Positive": "I'm glad to hear that you're feeling positive!",
-        "Neutral": "It seems like you're feeling neutral.",
-        "Negative": "I'm sorry you're feeling this way. Let me know if I can help."
-    }
-    return responses.get(sentiment, "I'm here to help. Feel free to share more.")
+
 
 
 if __name__ == '__main__':
