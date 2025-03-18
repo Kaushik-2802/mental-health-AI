@@ -32,7 +32,7 @@ function SignUpPage() {
 
     try {
       const response = await axios.post(
-        "https://mental-health-ai-rilr.onrender.com/api/register",
+        "http://localhost/5000/api/register",
         {
           firstname: formData.firstname,
           surname: formData.surname,
