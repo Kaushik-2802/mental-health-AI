@@ -57,7 +57,8 @@ function ChatPage() {
   // Scroll to bottom function
   const scrollToBottom = () => {
     if (messageContainerRef.current) {
-      messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
+      messageContainerRef.current.scrollTop =
+        messageContainerRef.current.scrollHeight;
     }
   };
 
@@ -101,7 +102,7 @@ function ChatPage() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/process_input",
+        "https://mental-health-ai-rilr.onrender.com/api/process_input",
         {
           sentence: userMessage.text,
         }
@@ -228,17 +229,16 @@ function ChatPage() {
               </button>
             )}
 
-<button
-                className="bg-red-800 text-white text-2xl p-2 rounded-lg mx-auto inline-flex w-full justify-center"
-                onClick={() => navigate("/signin")}
-              >
-                <img
-                  src={brainwaveSymbol}
-                  className="w-10 h-10 rounded-full object-cover mr-1"
-                />
-                <div className="mt-0.5">signout</div>
-              </button>
-            
+            <button
+              className="bg-red-800 text-white text-2xl p-2 rounded-lg mx-auto inline-flex w-full justify-center"
+              onClick={() => navigate("/signin")}
+            >
+              <img
+                src={brainwaveSymbol}
+                className="w-10 h-10 rounded-full object-cover mr-1"
+              />
+              <div className="mt-0.5">signout</div>
+            </button>
           </div>
         </div>
       </div>
@@ -263,7 +263,7 @@ function ChatPage() {
           </button>
         </div>
 
-        <div 
+        <div
           ref={messageContainerRef}
           className="flex-1 overflow-y-auto p-6 space-y-4 bg-gray-900"
         >
@@ -325,7 +325,7 @@ function ChatPage() {
               />
               <div className="mt-0.5">Report</div>
             </button>
-          )}   
+          )}
         </form>
       </div>
     </div>
