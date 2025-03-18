@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { FaBell, FaUserMd, FaUsers, FaExclamationTriangle, FaSignOutAlt } from "react-icons/fa";
+import {
+  FaBell,
+  FaUserMd,
+  FaUsers,
+  FaExclamationTriangle,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 
 // Initial alerts data
 const initialAlerts = [
-  { 
-    id: 1, 
-    patient: "John Doe", 
-    severity: "high", 
-    message: "Reported severe anxiety symptoms", 
-    timestamp: new Date() 
-  }
+  {
+    id: 1,
+    patient: "John Doe",
+    severity: "high",
+    message: "Reported severe anxiety symptoms",
+    timestamp: new Date(),
+  },
 ];
 
 // Function to fetch intensity data from the API
@@ -31,8 +37,8 @@ const DoctorDashboardPage = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/signin');
+    localStorage.removeItem("token");
+    navigate("/signin");
   };
 
   useEffect(() => {
@@ -42,22 +48,22 @@ const DoctorDashboardPage = () => {
         if (intensityData.length > 0) {
           const latestEntry = intensityData[0];
           const intensity = latestEntry.intensity_scores?.[0]?.score || 0;
-          
+
           if (intensity > 8) {
             const newAlert = {
               id: Date.now(),
               patient: "Patient",
               severity: "high",
               message: `High intensity detected: ${intensity}`,
-              timestamp: new Date(latestEntry.timestamp)
+              timestamp: new Date(latestEntry.timestamp),
             };
-            
+
             // Check if we already have an alert for this timestamp
-            setAlerts(prevAlerts => {
+            setAlerts((prevAlerts) => {
               const alertExists = prevAlerts.some(
-                alert => alert.message === newAlert.message
+                (alert) => alert.message === newAlert.message
               );
-              
+
               if (!alertExists) {
                 console.log("Adding new alert:", newAlert); // Debug log
                 return [newAlert, ...prevAlerts];
@@ -118,7 +124,9 @@ const DoctorDashboardPage = () => {
                 <div
                   key={alert.id}
                   className={`p-4 rounded-lg transition-all duration-300 ${
-                    alert.severity === "high" ? "bg-red-500/20" : "bg-yellow-500/20"
+                    alert.severity === "high"
+                      ? "bg-red-500/20"
+                      : "bg-yellow-500/20"
                   }`}
                 >
                   <div className="flex justify-between items-start">

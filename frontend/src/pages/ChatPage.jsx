@@ -13,7 +13,7 @@ import { brainwaveSymbol } from "../assets";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-const genAI = new GoogleGenerativeAI("AIzaSyDtGmDCcWiNHm5NBk4KWrWFr8-xUNYlIPE");
+const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
 function ChatPage() {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ function ChatPage() {
   const model = genAI.getGenerativeModel({ model: "models/gemini-2.0-flash-lite" });
   
   // Initial context prompt
-  const contextPrompt = "You now need to act like a professional mental health expert and figure out all the emotions of the user by asking a set of questions one by one (have a genuine and purposeful conversation and DO NOT ASK ALL OF YOUR QUESTIONS AT ONCE), so ask the questions carefully so you can extract feelings from the user. Once you believe the conversation is worth ending, say thank you and ask the user to generate their report but before that keep your messages concise(max 20 words only don't exceed),and also ask subsequent questions do not give any recommendations on what to do just do your best to discover the emotions of the user.";
+  const contextPrompt = "You now need to act like a professional mental health expert and figure out all the emotions of the user by asking a set of questions one by one (have a genuine and purposeful conversation and DO NOT ASK ALL OF YOUR QUESTIONS AT ONCE), so ask the questions carefully so you can extract feelings from the user. Once you believe the conversation is worth ending, say thank you and ask the user to generate their report but before that keep your messages concise(max 20 words only don't exceed), and also ask subsequent questions do not give any recommendations on what to do just do your best to discover the emotions of the user.";
 
   // Load model chats from localStorage for Gemini API conversation history
   const [modelChats, setModelChats] = useState(() => {
@@ -75,7 +75,8 @@ function ChatPage() {
   // Scroll to bottom function
   const scrollToBottom = () => {
     if (messageContainerRef.current) {
-      messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
+      messageContainerRef.current.scrollTop =
+        messageContainerRef.current.scrollHeight;
     }
   };
 
@@ -301,7 +302,7 @@ function ChatPage() {
           </button>
         </div>
 
-        <div 
+        <div
           ref={messageContainerRef}
           className="flex-1 overflow-y-auto p-6 space-y-4 bg-gray-900"
         >
@@ -382,7 +383,7 @@ function ChatPage() {
               />
               <div className="mt-0.5">Report</div>
             </button>
-          )}   
+          )}
         </form>
       </div>
     </div>
