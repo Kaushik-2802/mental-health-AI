@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import ReactMarkdown from "react-markdown";
 import {
   MessageSquare,
   Search,
@@ -21,7 +22,8 @@ function ChatPage() {
   const [currentMessage, setCurrentMessage] = useState("");
   const [analysisData, setAnalysisData] = useState(null);
   const [activeChat, setActiveChat] = useState(1);
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+  const [loading, setLoading] = useState(false);
+  const model = genAI.getGenerativeModel({ model: "models/gemini-2.0-flash-lite" });
 
   // Load chats from localStorage on component mount
   const [chats, setChats] = useState(() => {
@@ -70,6 +72,8 @@ function ChatPage() {
   const activeConversation = chats.find((chat) => chat.id === activeChat);
 
   const handleSendMessage = async (e) => {
+    setLoading(true);
+    
     e.preventDefault();
     if (!currentMessage.trim()) return;
 
@@ -281,7 +285,7 @@ function ChatPage() {
                     : "bg-gray-800 text-white rounded-r-lg rounded-tl-lg"
                 } px-4 py-2`}
               >
-                <p>{message.text}</p>
+                <p><ReactMarkdown>{message.text}</ReactMarkdown></p>
                 <span
                   className={`text-xs ${
                     message.sender === "user"
