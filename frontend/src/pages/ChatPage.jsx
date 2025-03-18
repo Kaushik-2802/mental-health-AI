@@ -133,7 +133,7 @@ function ChatPage() {
 
     try {
       const response = await axios.post(
-        "https://mental-health-ai-rilr.onrender.com/api/process_input",
+        "https://localhost:5000/api/process_input",
         {
           sentence: userMessage.text,
         }
