@@ -8,8 +8,13 @@ import datetime
 import google.generativeai as genai
 from dotenv import load_dotenv
 import os
+from flask_cors import CORS
+
+
 
 load_dotenv()
+
+CORS(app)
 
 API_KEY = os.getenv("API_KEY")
 
