@@ -24,6 +24,22 @@ function ChatPage() {
   const [activeChat, setActiveChat] = useState(1);
   const [loading, setLoading] = useState(false);
   const model = genAI.getGenerativeModel({ model: "models/gemini-2.0-flash-lite" });
+  
+  // Initial context prompt
+  const contextPrompt = "You now need to act like a professional mental health expert and figure out all the emotions of the user by asking a set of questions one by one (have a genuine and purposeful conversation and DO NOT ASK ALL OF YOUR QUESTIONS AT ONCE), so ask the questions carefully so you can extract feelings from the user. Once you believe the conversation is worth ending, say thank you and ask the user to generate their report but before that keep your messages concise(max 20 words only don't exceed),and also ask subsequent questions do not give any recommendations on what to do just do your best to discover the emotions of the user.";
+
+  // Load model chats from localStorage for Gemini API conversation history
+  const [modelChats, setModelChats] = useState(() => {
+    const savedModelChats = localStorage.getItem("modelChats");
+    return savedModelChats
+      ? JSON.parse(savedModelChats)
+      : [
+          {
+            role: "user",
+            parts: [{ text: contextPrompt }],
+          }
+        ];
+  });
 
   // Load chats from localStorage on component mount
   const [chats, setChats] = useState(() => {
@@ -63,19 +79,20 @@ function ChatPage() {
     }
   };
 
-  // Save chats to localStorage and scroll to bottom whenever chats state changes
+  // Save chats and modelChats to localStorage and scroll to bottom whenever they change
   useEffect(() => {
     localStorage.setItem("chats", JSON.stringify(chats));
+    localStorage.setItem("modelChats", JSON.stringify(modelChats));
     scrollToBottom();
-  }, [chats]);
+  }, [chats, modelChats]);
 
   const activeConversation = chats.find((chat) => chat.id === activeChat);
 
   const handleSendMessage = async (e) => {
-    setLoading(true);
-    
     e.preventDefault();
     if (!currentMessage.trim()) return;
+    
+    setLoading(true);
 
     const userMessage = {
       id: activeConversation.messages.length + 1,
@@ -101,6 +118,16 @@ function ChatPage() {
       })
     );
 
+    // Update modelChats with user message
+    const updatedModelChats = [
+      ...modelChats,
+      {
+        role: "user",
+        parts: [{ text: currentMessage }],
+      }
+    ];
+    setModelChats(updatedModelChats);
+
     setCurrentMessage("");
 
     try {
@@ -112,23 +139,18 @@ function ChatPage() {
       );
 
       setAnalysisData(response.data);
-
       console.log(response.data);
 
-      // Initial context prompt for Gemini
-      const contextPrompt =
-        "You now need to act like a professional mental health expert and figure out all the emotions of the user by asking a set of questions one by one (have a genuine and purposeful conversation and DO NOT ASK ALL OF YOUR QUESTIONS AT ONCE), so ask the questions carefully so you can extract feelings from the user. Once you believe the conversation is worth ending, say thank you and ask the user to generate their report but before that keep your messages concise(max 20 words only don't exceed),and also ask subsequent questions  do not give any recommendations on what to do just do your best to discover the emotions of the user.";
+      // Create a new chat with the updated history
+      const chat = model.startChat({
+        history: updatedModelChats
+      });
 
-      // Send the context prompt or the user's message to Gemini
-      const prompt =
-        activeConversation.messages.length === 1
-          ? contextPrompt
-          : userMessage.text;
-      const result = await model.generateContent(prompt);
-      const resp = await result.response;
-      const textres = resp.text();
-      console.log("Gemini response:", textres);
-
+      // Send the message and get the response
+      const result = await chat.sendMessage(userMessage.text);
+      const textres = result.response.text();
+      
+      // Create bot message for UI
       const botMessage = {
         id: activeConversation.messages.length + 2,
         text: textres,
@@ -147,9 +169,21 @@ function ChatPage() {
             : chat
         )
       );
+
+      // Update modelChats with bot response
+      setModelChats([
+        ...updatedModelChats,
+        {
+          role: "model",
+          parts: [{ text: textres }],
+        }
+      ]);
+
     } catch (error) {
       console.error("Error sending message:", error);
       // Consider adding error handling UI feedback here
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -232,7 +266,7 @@ function ChatPage() {
               </button>
             )}
 
-<button
+          <button
                 className="bg-red-800 text-white text-2xl p-2 rounded-lg mx-auto inline-flex w-full justify-center"
                 onClick={() => navigate("/signin")}
               >
@@ -298,6 +332,25 @@ function ChatPage() {
               </div>
             </div>
           ))}
+            {loading && (
+          <div className="mr-auto bg-gray-800 text-white p-3 rounded-lg flex items-center space-x-2 max-w-[10%]">
+            <div className="flex space-x-1">
+              <div
+                className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                style={{ animationDelay: "0ms" }}
+              ></div>
+              <div
+                className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                style={{ animationDelay: "150ms" }}
+              ></div>
+              <div
+                className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                style={{ animationDelay: "300ms" }}
+              ></div>
+            </div>
+            <span className="text-sm text-gray-400">Thinking...</span>
+          </div>
+        )}
         </div>
 
         <form
