@@ -23,9 +23,7 @@ const initialAlerts = [
 // Function to fetch intensity data from the API
 const fetchIntensityData = async () => {
   try {
-    const response = await fetch(
-      "https://mental-health-ai-rilr.onrender.com/api/intensity-history"
-    );
+    const response = await fetch("http://localhost:5000/api/intensity-history");
     const data = await response.json();
     return data?.history || [];
   } catch (error) {
