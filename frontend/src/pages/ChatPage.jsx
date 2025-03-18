@@ -337,7 +337,7 @@ function ChatPage() {
             </div>
           ))}
           {loading && (
-            <div className="mr-auto bg-gray-800 text-white p-3 rounded-lg flex items-center space-x-2 max-w-[10%]">
+            <div className="mr-auto bg-gray-800 text-white p-3 rounded-lg flex items-center space-x-2 max-w-[15%]">
               <div className="flex space-x-1">
                 <div
                   className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
