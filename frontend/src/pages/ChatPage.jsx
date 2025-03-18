@@ -259,7 +259,7 @@ function ChatPage() {
             {analysisData && (
               <button
                 className="bg-purple-800 text-white text-2xl p-2 rounded-lg mx-auto inline-flex w-full justify-center"
-                onClick={() => navigate("/report")}
+                onClick={() => navigate("/report", { state: { analysisData } })}
               >
                 <img
                   src={brainwaveSymbol}
