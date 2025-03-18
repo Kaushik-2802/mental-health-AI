@@ -9,6 +9,7 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 import os
 import logging
+import psutil
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -79,7 +80,14 @@ def process_input_options():
 
 @app.route('/api/process_input', methods=['POST'])
 def process_input():
+    # Get process-specific memory and CPU
+    process = psutil.Process(os.getpid())
+    mem_mb = process.memory_info().rss / 1024 / 1024  # Resident Set Size in MB
+    cpu_percent = psutil.cpu_percent(interval=0.1)  # Short interval for this request
+    logger.info("Process memory usage: %s MB", mem_mb)
+    logger.info("CPU usage: %s%%", cpu_percent)
     logger.info("Received POST request: %s", request.get_json())
+
     data = request.get_json()
     user_input = data.get('sentence', '').strip()
 
@@ -99,7 +107,6 @@ def process_input():
         logger.info("Processed input: sentiment=%s, concerns=%s", sentiment, concerns)
     except Exception as e:
         logger.error("Error processing input: %s", str(e))
-        raise
 
     entry = {
         "text": user_input,
