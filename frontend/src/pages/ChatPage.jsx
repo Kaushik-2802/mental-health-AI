@@ -332,15 +332,9 @@ function ChatPage() {
                     : "bg-gray-800 text-white rounded-r-lg rounded-tl-lg"
                 } px-4 py-2`}
               >
-<<<<<<< HEAD
                 <ReactMarkdown components={components}>
                   {message.text}
                 </ReactMarkdown>
-=======
-                <p>
-                  <ReactMarkdown>{message.text}</ReactMarkdown>
-                </p>
->>>>>>> d13631a197e20ca823539ba35cd5ecd34ccb3ec5
                 <span
                   className={`text-xs ${
                     message.sender === "user"
