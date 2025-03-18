@@ -149,6 +149,9 @@ def generate_response_based_on_sentiment(sentiment):
     return responses.get(sentiment, "I'm here to help. Feel free to share more.")
 
 
+
+# Main Deployment and Development server code 
+
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))  # Render assigns a PORT dynamically
     if os.getenv("RENDER"):  # Running on Render
