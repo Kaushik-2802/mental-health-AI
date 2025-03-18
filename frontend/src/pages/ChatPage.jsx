@@ -136,7 +136,7 @@ function ChatPage() {
 
     try {
       const response = await axios.post(
-        'https://mental-health-ai-rilr.onrender.com/api/process_input',
+        "https://mental-health-ai-rilr.onrender.com/api/process_input",
         {
           sentence: userMessage.text,
         },
@@ -338,8 +338,8 @@ function ChatPage() {
                 <span
                   className={`text-xs ${
                     message.sender === "user"
-                      ? "text-blue-200"
-                      : "text-gray-400"
+                    ? "text-blue-200"
+                    : "text-gray-400"
                   } block mt-1`}
                 >
                   {message.time}
