@@ -133,9 +133,15 @@ function ChatPage() {
 
     try {
       const response = await axios.post(
-        "https://localhost:5000/api/process_input",
+        'http://localhost:5000/api/process_input',
         {
           sentence: userMessage.text,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true
         }
       );
 
@@ -196,6 +202,11 @@ function ChatPage() {
       )
     );
   };
+
+  // Instead of allowing default <p> tags, you can use a div or other element
+  const components = {
+    p: ({node, ...props}) => <div className="paragraph" {...props} />
+  }
 
   return (
     <div className="h-screen flex bg-gray-900">
@@ -320,7 +331,9 @@ function ChatPage() {
                     : "bg-gray-800 text-white rounded-r-lg rounded-tl-lg"
                 } px-4 py-2`}
               >
-                <p><ReactMarkdown>{message.text}</ReactMarkdown></p>
+                <ReactMarkdown components={components}>
+                  {message.text}
+                </ReactMarkdown>
                 <span
                   className={`text-xs ${
                     message.sender === "user"
