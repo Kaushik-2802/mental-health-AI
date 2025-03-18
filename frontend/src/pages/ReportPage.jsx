@@ -54,7 +54,7 @@ const ReportPage = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        "https://mental-health-ai-rilr.onrender.com/api/process_input"
+        "https://mental-health-ai-rilr.onrender.com/api/intensity-history"
       );
       const data = await response.json();
 
