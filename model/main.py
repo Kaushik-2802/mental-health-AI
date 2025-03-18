@@ -14,7 +14,16 @@ load_dotenv()
 API_KEY = os.getenv("API_KEY")
 
 app = Flask(__name__)
-CORS(app)
+
+# Simplify CORS configuration for development
+CORS(app, origins=[
+    "http://localhost:5173",    # Vite default
+    "http://localhost:3000",    # Just in case
+    "http://127.0.0.1:5173"     # Alternative localhost
+], methods=[
+    "GET", "POST", "PUT", "DELETE", "OPTIONS"
+], allow_headers=["Content-Type", "Authorization"],
+supports_credentials=True)
 
 genai.configure(api_key=API_KEY)
 chat_sessions = {}
@@ -55,7 +64,7 @@ def generate_response_based_on_sentiment(user_input, sentiment):
     # Default fallback responses
     if sentiment.lower() == "negative":
         return (
-            "I'm here for you. It sounds like you’re going through a tough time. "
+            "I'm here for you. It sounds like you're going through a tough time. "
             "Try taking deep breaths, journaling your thoughts, or reaching out to a friend or professional. "
             "You're not alone, and things can improve with small steps."
         )
@@ -157,18 +166,30 @@ def get_history():
     else:
         return jsonify({"error": "No historical data available."})
 
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:5173')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    response.headers.add('Access-Control-Allow-Credentials', 'true')
+    return response
 
-
-
+# Add this route to test CORS
+@app.route('/api/test', methods=['GET'])
+def test_cors():
+    return jsonify({"message": "CORS is working"})
 
 # Main Deployment and Development server code 
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))  # Render assigns a PORT dynamically
-    if os.getenv("RENDER"):  # Running on Render
-        from gunicorn.app.wsgiapp import run
-        os.environ["GUNICORN_CMD_ARGS"] = f"-b 0.0.0.0:{port} -w 4"  # Bind to Render port
-        run()
-    else:
-        from waitress import serve  # Use Waitress for local Windows testing
-        serve(app, host="0.0.0.0", port=port)
+    try:
+        port = int(os.environ.get("PORT", 5000))
+        print(f"Starting server on port {port}")
+        if os.getenv("RENDER"):
+            from gunicorn.app.wsgiapp import run
+            os.environ["GUNICORN_CMD_ARGS"] = f"-b 0.0.0.0:{port} -w 4"
+            run()
+        else:
+            app.run(host="0.0.0.0", port=port, debug=True, ssl_context=None)  # Explicitly disable SSL
+    except Exception as e:
+        print(f"Error starting server: {e}")
