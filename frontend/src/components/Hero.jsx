@@ -5,11 +5,13 @@ import Section from "./Section";
 import { BackgroundCircles, BottomLine, Gradient } from "./design/Hero";
 import { heroIcons } from "../constants";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Generating from "./Generating";
 import Notification from "./Notification";
 
 const Hero = () => {
   const parallaxRef = useRef(null);
+  const navigate = useNavigate(); // Initialize navigate function
 
   return (
     <Section
@@ -41,7 +43,7 @@ const Hero = () => {
             world where AI meets empathy, offering real-time insights and
             personalized support for a healthier mind.
           </p>
-          <Button href="/signin" white>
+          <Button onClick={() => navigate("/signin")} white>
             Get started
           </Button>
         </div>
