@@ -38,7 +38,7 @@ const DoctorDashboardPage = () => {
   const fetchIntensityData = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/api/intensity-history");
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/intensity-history`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -60,7 +60,7 @@ const DoctorDashboardPage = () => {
   const fetchReportData = async (timeframe = "daily") => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/api/get_graph", {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/get_graph`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
