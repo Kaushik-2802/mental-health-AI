@@ -58,7 +58,7 @@ const ReportPage = () => {
     try {
       // Updated to include timeframe parameter
       const response = await fetch(
-        `http://localhost:5000/api/intensity-history?timeframe=${timeframe}`
+        `${import.meta.env.VITE_SERVER_URL}/api/intensity-history?timeframe=${timeframe}`
       );
       const data = await response.json();
 
