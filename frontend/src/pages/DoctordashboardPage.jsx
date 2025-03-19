@@ -24,7 +24,7 @@ const initialAlerts = [
 const fetchIntensityData = async () => {
   try {
     const response = await fetch(
-      "http://localhost/5000/api/intensity-history"
+      `${import.meta.env.VITE_SERVER_URL}/api/intensity-history`
     );
     const data = await response.json();
     return data?.history || [];

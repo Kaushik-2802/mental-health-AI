@@ -12,7 +12,7 @@ export const setupChatService = (apiKey) => {
     try {
       // Analyze message with backend
       const analysisResponse = await axios.post(
-        "http://localhost:5000/api/process_input",
+        `${import.meta.env.VITE_SERVER_URL}/api/process_input`,
         {
           sentence: message,
         },
