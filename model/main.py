@@ -97,6 +97,10 @@ def process_input():
     """Process user input, analyze sentiment and mental health concerns, store the data."""
     data = request.get_json()
     user_input = data.get('sentence', '').strip()
+    user_id = data.get('userId', 'anonymous')  # Get user ID if available
+
+    if not user_input:
+        return jsonify({"error": "No input provided"}), 400
 
     if user_input.lower() == 'exit':
         return jsonify({"message": "Exiting..."})
@@ -104,47 +108,82 @@ def process_input():
     if user_input.lower() == 'report':
         return jsonify({"report": timeline_analyzer.generate_graph("daily")})
 
+    # Analyze the input
     sentiment, keywords = get_sentiment(user_input)
     concerns = extract_mental_health_concerns(user_input)
-    concern_categories = {concern: classify_concern(concern) for concern in concerns}
-    concern_intensities = {concern: score_intensity(concern) for concern in concerns}
+    
+    # Better error handling for concern processing
+    concern_categories = {}
+    concern_intensities = {}
+    
+    # Process each concern and ensure proper numeric intensity scores
+    for concern in concerns:
+        try:
+            # Classify the concern
+            category = classify_concern(concern)
+            concern_categories[concern] = category
+            
+            # Score the intensity (ensure it's a float)
+            intensity = score_intensity(concern)
+            # Convert to float if not already
+            if isinstance(intensity, (int, float)):
+                concern_intensities[concern] = float(intensity)
+            else:
+                # Default value if conversion fails
+                concern_intensities[concern] = 5.0
+                
+        except Exception as e:
+            print(f"Error processing concern '{concern}': {e}")
+            # Provide default values if processing fails
+            if concern not in concern_categories:
+                concern_categories[concern] = "general"
+            if concern not in concern_intensities:
+                concern_intensities[concern] = 5.0
+    
+    # Generate response based on sentiment
     response_message = generate_response_based_on_sentiment(user_input, sentiment)
+
+    # Format intensity scores for MongoDB storage
+    formatted_intensity_scores = {}
+    for concern, score in concern_intensities.items():
+        formatted_intensity_scores[concern] = float(score)
 
     # Store input data in MongoDB
     entry = {
+        "userId": user_id,
         "text": user_input,
         "sentiment": sentiment,
         "keywords": keywords if keywords else [],
         "concerns": concerns if concerns else [],
         "concern_categories": concern_categories if concern_categories else {},
-        "intensity_scores": concern_intensities if concern_intensities else {},
+        "intensity_scores": formatted_intensity_scores,  # Store as properly formatted dictionary
         "timestamp": datetime.datetime.utcnow()
     }
-    collection.insert_one(entry)
+    
+    # Insert into MongoDB
+    try:
+        collection.insert_one(entry)
+    except Exception as e:
+        print(f"MongoDB insertion error: {e}")
+    
+    # Add to timeline analyzer
+    timeline_analyzer.add_input(user_id, user_input, concerns, concern_categories, concern_intensities)
 
-    timeline_analyzer.add_input(1, user_input, concerns, concern_categories, concern_intensities)
-
+    # Return the processed data
     response = {
         "sentiment": sentiment,
         "response_message": response_message,
-        "keywords": keywords if keywords else "None",
-        "concerns": concerns if concerns else "None",
-        "concern_categories": concern_categories if concern_categories else "None",
-        "intensity_scores": concern_intensities if concern_intensities else "None"
+        "keywords": keywords if keywords else [],
+        "concerns": concerns if concerns else [],
+        "concern_categories": concern_categories if concern_categories else {},
+        "intensity_scores": concern_intensities if concern_intensities else {},
+        # Add alert flag if any score is above 9
+        "high_intensity_alert": any(score > 9 for score in concern_intensities.values())
     }
 
     return jsonify(response)
 
-@app.route('/api/get_graph', methods=['POST'])
-def get_graph():
-    """Generate a graph based on the selected timeframe (hourly, daily, weekly)."""
-    data = request.get_json()
-    timeframe = data.get("timeframe", "daily")
-
-    graph = timeline_analyzer.generate_graph(timeframe)
-
-    return jsonify({"graph": graph}) if graph else jsonify({"error": "No data available for this timeframe."})
-
+# Modify the get_history function in main.py to include text content
 @app.route('/api/intensity-history', methods=['GET'])
 def get_history():
     """Fetch historical intensity scores for plotting trend data."""
@@ -163,9 +202,10 @@ def get_history():
         start_time = now - datetime.timedelta(days=1)
     
     # Query MongoDB with the timeframe filter
+    # Include text in the returned data to display message content in alerts
     history = list(collection.find(
         {"timestamp": {"$gte": start_time}}, 
-        {"_id": 0, "timestamp": 1, "intensity_scores": 1}
+        {"_id": 0, "timestamp": 1, "text": 1, "intensity_scores": 1}
     ))
 
     formatted_history = []
@@ -173,19 +213,41 @@ def get_history():
     for entry in history:
         timestamp_str = entry["timestamp"].strftime("%Y-%m-%d %H:%M:%S")
         intensity_scores = entry.get("intensity_scores", {})
+        text = entry.get("text", "")
 
         # Convert intensity_scores dictionary into a list of { concern, score }
-        formatted_scores = [{"concern": concern, "score": score} for concern, score in intensity_scores.items()]
+        formatted_scores = []
+        for concern, score in intensity_scores.items():
+            # Convert score to float if it's not already
+            try:
+                score_value = float(score)
+            except (ValueError, TypeError):
+                score_value = 0.0
+                
+            formatted_scores.append({"concern": concern, "score": score_value})
 
         formatted_history.append({
             "timestamp": timestamp_str,
+            "text": text,
             "intensity_scores": formatted_scores
         })
 
     if formatted_history:
         return jsonify({"history": formatted_history})
     else:
-        return jsonify({"error": "No historical data available for the selected timeframe."})
+        return jsonify({"history": []})  # Return empty array instead of error
+
+# Ensure the get_graph endpoint is working properly
+@app.route('/api/get_graph', methods=['POST'])
+def get_graph():
+    """Generate a graph based on the selected timeframe (hourly, daily, weekly)."""
+    data = request.get_json()
+    timeframe = data.get("timeframe", "daily")
+
+    graph = timeline_analyzer.generate_graph(timeframe)
+    
+    # Return the data in the format the frontend expects
+    return jsonify({"data": graph}) if graph else jsonify({"data": []})
 
 @app.route('/api/test', methods=['GET'])
 def test_cors():
@@ -202,6 +264,6 @@ if __name__ == '__main__':
             os.environ["GUNICORN_CMD_ARGS"] = f"-b 0.0.0.0:{port} -w 4"
             run()
         else:
-            app.run(host="0.0.0.0", port=port, debug=True, ssl_context=None)  # Explicitly disable SSL
+            app.run(host="0.0.0.0", port=port, debug=True, ssl_context=None)  
     except Exception as e:
         print(f"Error starting server: {e}")
