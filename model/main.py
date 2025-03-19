@@ -148,7 +148,25 @@ def get_graph():
 @app.route('/api/intensity-history', methods=['GET'])
 def get_history():
     """Fetch historical intensity scores for plotting trend data."""
-    history = list(collection.find({}, {"_id": 0, "timestamp": 1, "intensity_scores": 1}))
+    # Get timeframe parameter, default to 'daily' if not provided
+    timeframe = request.args.get('timeframe', 'daily')
+    
+    # Determine the time range based on timeframe
+    now = datetime.datetime.utcnow()
+    if timeframe == 'hourly':
+        start_time = now - datetime.timedelta(hours=1)
+    elif timeframe == 'weekly':
+        start_time = now - datetime.timedelta(weeks=1)
+    elif timeframe == 'monthly':
+        start_time = now - datetime.timedelta(days=30)
+    else:  # Default to daily
+        start_time = now - datetime.timedelta(days=1)
+    
+    # Query MongoDB with the timeframe filter
+    history = list(collection.find(
+        {"timestamp": {"$gte": start_time}}, 
+        {"_id": 0, "timestamp": 1, "intensity_scores": 1}
+    ))
 
     formatted_history = []
     
@@ -167,7 +185,7 @@ def get_history():
     if formatted_history:
         return jsonify({"history": formatted_history})
     else:
-        return jsonify({"error": "No historical data available."})
+        return jsonify({"error": "No historical data available for the selected timeframe."})
 
 @app.route('/api/test', methods=['GET'])
 def test_cors():

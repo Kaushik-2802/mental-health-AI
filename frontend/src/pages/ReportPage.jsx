@@ -28,6 +28,7 @@ import {
   ArrowLeft,
   RefreshCcw,
   MessageSquare,
+  ChevronDown,
 } from "lucide-react";
 
 ChartJS.register(
@@ -48,13 +49,16 @@ const ReportPage = () => {
   const [loading, setLoading] = useState(true);
   const [lastUpdate, setLastUpdate] = useState(new Date());
   const [selectedCard, setSelectedCard] = useState(null);
+  const [timeframe, setTimeframe] = useState("daily");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const analysisData = location.state?.analysisData || {};
 
   const fetchData = async () => {
     setLoading(true);
     try {
+      // Updated to include timeframe parameter
       const response = await fetch(
-        "http://localhost:5000/api/intensity-history"
+        `http://localhost:5000/api/intensity-history?timeframe=${timeframe}`
       );
       const data = await response.json();
 
@@ -81,7 +85,7 @@ const ReportPage = () => {
     fetchData();
     const interval = setInterval(fetchData, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [timeframe]); // Added timeframe dependency to re-fetch when timeframe changes
 
   const handleExport = async () => {
     const reportElement = document.getElementById("report-container");
@@ -97,6 +101,22 @@ const ReportPage = () => {
 
     pdf.addImage(imgData, "PNG", 0, 0, imgWidth * ratio, imgHeight * ratio);
     pdf.save(`patient-report-${new Date().toISOString()}.pdf`);
+  };
+
+  const handleTimeframeChange = (newTimeframe) => {
+    setTimeframe(newTimeframe);
+    setIsDropdownOpen(false);
+  };
+
+  const timeframeOptions = [
+    { value: "daily", label: "Daily" },
+    { value: "weekly", label: "Weekly" },
+    { value: "monthly", label: "Monthly" },
+  ];
+
+  const getTimeframeLabel = () => {
+    const option = timeframeOptions.find(option => option.value === timeframe);
+    return option ? option.label : "Daily";
   };
 
   const cardColors = {
@@ -142,6 +162,15 @@ const ReportPage = () => {
     ],
   };
 
+  // Dynamically adjust time unit based on timeframe selection
+  const getTimeUnit = () => {
+    switch(timeframe) {
+      case "weekly": return "day";
+      case "monthly": return "week";
+      default: return "minute";
+    }
+  };
+
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -149,11 +178,13 @@ const ReportPage = () => {
       x: {
         type: "time",
         time: {
-          unit: "minute",
+          unit: getTimeUnit(),
           tooltipFormat: "yyyy-MM-dd HH:mm:ss",
           displayFormats: {
             minute: "HH:mm:ss",
             hour: "HH:mm",
+            day: "MMM d",
+            week: "MMM d",
           },
         },
         title: {
@@ -193,6 +224,12 @@ const ReportPage = () => {
           color: "#E5E7EB",
           font: { size: 14 },
         },
+      },
+      title: {
+        display: true,
+        text: `${getTimeframeLabel()} Intensity Analysis`,
+        color: "#E5E7EB",
+        font: { size: 16, weight: "bold" },
       },
     },
   };
@@ -293,6 +330,33 @@ const ReportPage = () => {
               <Brain className="w-6 h-6 text-blue-400" />
               Intensity Analysis Over Time
             </h3>
+            
+            {/* Timeframe Dropdown */}
+            <div className="flex justify-center items-center w-full mb-4">
+            <div className="relative">
+              <button
+                className="px-4 py-2 bg-gray-700  text-gray-100 rounded-lg flex items-center gap-2 hover:bg-gray-600 transition-colors"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              >
+                {getTimeframeLabel()}
+                <ChevronDown className={`w-4 h-4 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {isDropdownOpen && (
+                <div className="absolute right-4 mt-2 w-36 bg-gray-700 rounded-lg shadow-lg overflow-hidden z-10">
+                  {timeframeOptions.map((option) => (
+                    <button
+                      key={option.value}
+                      className="block w-full text-left px-4 py-2 text-gray-100 hover:bg-gray-600 transition-colors"
+                      onClick={() => handleTimeframeChange(option.value)}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            </div>
+            
             {loading && (
               <div className="flex items-center gap-2 text-gray-300 text-lg">
                 <motion.div
