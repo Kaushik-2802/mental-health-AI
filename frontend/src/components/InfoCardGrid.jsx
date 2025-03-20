@@ -1,4 +1,3 @@
-// components/InfoCardGrid.jsx
 import React, { useState } from "react";
 import {
   AlertCircle,
@@ -22,40 +21,55 @@ const InfoCardGrid = ({ analysisData }) => {
     sentiment = "",
   } = analysisData;
 
+  const fallbackMessages = {
+    concerns: "No concerns found",
+    keywords: "No keywords found",
+    response_message: "No response available",
+    sentiment: "No sentiment detected",
+    concern_categories: "No concern categories available",
+    intensity_scores: "No intensity scores available",
+  };
+
   const cards = [
     {
       title: "Concern Categories",
-      content: Object.entries(concern_categories),
+      content:
+        Object.keys(concern_categories).length > 0
+          ? Object.entries(concern_categories)
+          : fallbackMessages.concern_categories,
       icon: <AlertCircle className="w-6 h-6" />,
       color: "blue",
     },
     {
       title: "Concerns",
-      content: concerns,
+      content: concerns.length > 0 ? concerns : fallbackMessages.concerns,
       icon: <FileText className="w-6 h-6" />,
       color: "indigo",
     },
     {
       title: "Intensity Scores",
-      content: Object.entries(intensity_scores),
+      content:
+        Object.keys(intensity_scores).length > 0
+          ? Object.entries(intensity_scores)
+          : fallbackMessages.intensity_scores,
       icon: <Maximize2 className="w-6 h-6" />,
       color: "purple",
     },
     {
       title: "Keywords",
-      content: keywords,
+      content: keywords.length > 0 ? keywords : fallbackMessages.keywords,
       icon: <Share2 className="w-6 h-6" />,
       color: "pink",
     },
     {
       title: "Sentiment",
-      content: sentiment,
+      content: sentiment || fallbackMessages.sentiment,
       icon: <Brain className="w-6 h-6" />,
       color: sentiment === "Negative" ? "red" : "green",
     },
     {
       title: "Response",
-      content: response_message,
+      content: response_message || fallbackMessages.response_message,
       icon: <MessageSquare className="w-6 h-6" />,
       color: "blue",
     },
