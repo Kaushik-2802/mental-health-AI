@@ -9,6 +9,7 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 import os
 import logging
+import psutil
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -88,7 +89,14 @@ INITIAL_QUESTION = "Hi! Let's begin. How are you feeling today?"
 
 @app.route('/api/process_input', methods=['POST'])
 def process_input():
+    # Get process-specific memory and CPU
+    process = psutil.Process(os.getpid())
+    mem_mb = process.memory_info().rss / 1024 / 1024  # Resident Set Size in MB
+    cpu_percent = psutil.cpu_percent(interval=0.1)  # Short interval for this request
+    logger.info("Process memory usage: %s MB", mem_mb)
+    logger.info("CPU usage: %s%%", cpu_percent)
     logger.info("Received POST request: %s", request.get_json())
+
     data = request.get_json()
     user_input = data.get('sentence', '').strip()
     user_id = data.get('userId', 'anonymous')  # Get user ID if available
