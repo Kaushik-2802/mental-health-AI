@@ -48,49 +48,51 @@ collection = db["user_inputs"]
 timeline_analyzer = TimelineSentimentAnalyzer()
 INITIAL_QUESTION = "Hi! Let's begin. How are you feeling today?"
 
-def generate_response_based_on_sentiment(user_input, sentiment):
-    """Generate a response from Gemini based on user input and sentiment, focusing on providing help and guidance."""
-    model = genai.GenerativeModel("gemini-1.5-pro")
+##### Response in the report page generator function 
+
+# def generate_response_based_on_sentiment(user_input, sentiment):
+#     """Generate a response from Gemini based on user input and sentiment, focusing on providing help and guidance."""
+#     model = genai.GenerativeModel("gemini-1.5-pro")
     
-    # Create a prompt for a detailed, helpful response
-    prompt = f"""
-    The user said: "{user_input}"
-    The detected sentiment is: {sentiment}
+#     # Create a prompt for a detailed, helpful response
+#     prompt = f"""
+#     The user said: "{user_input}"
+#     The detected sentiment is: {sentiment}
 
-    Please respond in three parts:
-    1. Provide a brief but warm acknowledgment of their feelings.
-    2. Offer specific, practical steps they can take to improve or maintain their emotional well-being.
-    3. Include a final encouraging statement that reassures them.
+#     Please respond in three parts:
+#     1. Provide a brief but warm acknowledgment of their feelings.
+#     2. Offer specific, practical steps they can take to improve or maintain their emotional well-being.
+#     3. Include a final encouraging statement that reassures them.
 
-    If the sentiment is positive, acknowledge and encourage maintaining it with good habits.
-    If the sentiment is negative, offer supportive guidance and coping strategies.
-    Keep the response under 200 words, and make it clear, actionable, and conversational.
-    """
+#     If the sentiment is positive, acknowledge and encourage maintaining it with good habits.
+#     If the sentiment is negative, offer supportive guidance and coping strategies.
+#     Keep the response under 200 words, and make it clear, actionable, and conversational.
+#     """
 
-    try:
-        response = model.generate_content(prompt)
-        if response and response.text:
-            return response.text.strip()
-    except Exception as e:
-        print(f"Error generating response: {e}")
+#     try:
+#         response = model.generate_content(prompt)
+#         if response and response.text:
+#             return response.text.strip()
+#     except Exception as e:
+#         print(f"Error generating response: {e}")
 
-    # Fallback responses
-    if sentiment.lower() == "negative":
-        return (
-            "I'm here for you. It sounds like you're going through a tough time. "
-            "Try taking deep breaths, journaling your thoughts, or reaching out to a friend or professional. "
-            "You're not alone, and things can improve with small steps."
-        )
-    elif sentiment.lower() == "positive":
-        return (
-            "That's great to hear! Keep nurturing your positivity by practicing gratitude, "
-            "engaging in activities that bring you joy, and staying connected with supportive people."
-        )
-    else:
-        return (
-            "I hear you. Consider taking some time for yourself today—whether it's a short break, "
-            "listening to your favorite music, or simply reflecting on your emotions. Self-care is important."
-        )
+#     # Fallback responses
+#     if sentiment.lower() == "negative":
+#         return (
+#             "I'm here for you. It sounds like you're going through a tough time. "
+#             "Try taking deep breaths, journaling your thoughts, or reaching out to a friend or professional. "
+#             "You're not alone, and things can improve with small steps."
+#         )
+#     elif sentiment.lower() == "positive":
+#         return (
+#             "That's great to hear! Keep nurturing your positivity by practicing gratitude, "
+#             "engaging in activities that bring you joy, and staying connected with supportive people."
+#         )
+#     else:
+#         return (
+#             "I hear you. Consider taking some time for yourself today—whether it's a short break, "
+#             "listening to your favorite music, or simply reflecting on your emotions. Self-care is important."
+#         )
 
 @app.route('/api/process_input', methods=['POST'])
 def process_input():
@@ -141,7 +143,7 @@ def process_input():
                 concern_intensities[concern] = 5.0
     
     # Generate response based on sentiment
-    response_message = generate_response_based_on_sentiment(user_input, sentiment)
+    #response_message = generate_response_based_on_sentiment(user_input, sentiment)
 
     # Format intensity scores for MongoDB storage
     formatted_intensity_scores = {}
@@ -172,7 +174,6 @@ def process_input():
     # Return the processed data
     response = {
         "sentiment": sentiment,
-        "response_message": response_message,
         "keywords": keywords if keywords else [],
         "concerns": concerns if concerns else [],
         "concern_categories": concern_categories if concern_categories else {},
