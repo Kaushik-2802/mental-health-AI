@@ -82,6 +82,19 @@ export default {
         "benefit-card-6": "url(assets/benefits/card-6.svg)",
       },
     },
+    keyframes: {
+      hover: {
+        'from': { transform: 'translateY(0)' },
+        'to': { transform: 'translateY(-3.5px)' }
+      },
+      pulse: {
+        'from': { scale: '1 1' },
+        'to': { scale: '1.2 1.2' }
+      }
+    },
+    animation: {
+      'hover': 'hover 1.4s infinite alternate ease-in-out',
+    },
   },
   plugins: [
     plugin(function ({ addBase, addComponents, addUtilities }) {

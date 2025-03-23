@@ -5,6 +5,7 @@ import ChatPage from "./pages/ChatPage";
 import ReportPage from "./pages/ReportPage";
 import DoctorDashboardPage from "./pages/DoctordashboardPage";
 import SignUpPage from "./pages/SignUpPage";
+import VoiceChatPage from "./pages/VoiceChatPage";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/report" element={<ReportPage />} />
         <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/voicechat" element={<VoiceChatPage />} />
       </Routes>
     </Router>
   );
