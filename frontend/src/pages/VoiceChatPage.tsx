@@ -1,11 +1,10 @@
 import { useRef, useState } from "react";
-import "./voice-chat-page.scss";
 import { LiveAPIProvider } from "../contexts/LiveAPIContext";
 import SidePanel from "../components/SidePanel";
 import { Altair } from "../components/Altair";
 import ControlTray from "../components/control-tray/ControlTray";
-import cn from "classnames";
 import BallVisualizer from "../components/design/BallVisualizer";
+import cn from "classnames";
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY as string;
 
@@ -19,24 +18,20 @@ const host = "generativelanguage.googleapis.com";
 const uri = `wss://${host}/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent`;
 
 function VoiceChatPage() {
-  // this video reference is used for displaying the active stream, whether that is the webcam or screen capture
-  // feel free to style as you see fit
   const videoRef = useRef<HTMLVideoElement>(null);
-  // either the screen capture, the video or null, if null we hide it
   const [videoStream, setVideoStream] = useState<MediaStream | null>(null);
 
   return (
-    <div className="App">
+    <div className="h-screen w-screen bg-gray-900 text-white font-mono">
       <LiveAPIProvider url={uri} apiKey={API_KEY}>
-        <div className="streaming-console">
+        <div className="flex h-full w-full bg-neutral-900 text-gray-300">
           <SidePanel />
-          <main>
-            <div className="main-app-area">
-              {/* APP goes here */}              
+          <main className="relative flex flex-col items-center justify-center flex-grow gap-4 max-w-full overflow-hidden">
+            <div className="flex flex-1 items-center justify-center">
               <Altair />
               <BallVisualizer />
               <video
-                className={cn("stream", {
+                className={cn("flex-grow max-w-[90%] rounded-2xl", {
                   hidden: !videoRef.current || !videoStream,
                 })}
                 ref={videoRef}
@@ -49,7 +44,7 @@ function VoiceChatPage() {
               supportsVideo={true}
               onVideoStreamChange={setVideoStream}
             >
-              {/* put your own buttons here */}
+              {/* Custom buttons go here */}
             </ControlTray>
           </main>
         </div>
