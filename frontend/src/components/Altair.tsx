@@ -22,13 +22,16 @@ const declaration: FunctionDeclaration = {
 
 function AltairComponent() {
   const [jsonString, setJSONString] = useState<string>("");
-  const { client, setConfig } = useLiveAPIContext();
+  const { client, setConfig, responseModality } = useLiveAPIContext();
+
+  console.log("reredner altair")
 
   useEffect(() => {
+    console.log("reredner altair from effect ")
     setConfig({
       model: "models/gemini-2.0-flash-exp",
       generationConfig: {
-        responseModalities: "audio",
+        responseModalities: responseModality as "text" | "audio" | "image" | undefined,
         speechConfig: {
           voiceConfig: { prebuiltVoiceConfig: { voiceName: "Aoede" } },
         },
@@ -36,7 +39,7 @@ function AltairComponent() {
       systemInstruction: {
         parts: [
           {
-            text: 'You are Kalrav and now need to act like a professional mental health expert and figure out all the emotions of the user by asking a set of questions one by one. Do not give any recommendations on what to do just do your best to discover the emotions of the user. Have a genuine and purposeful conversation. So ask the questions carefully so you can extract feelings from the user. Once you believe the conversation is worth ending, say thank you and ask the user to generate their mental health report of the day. Any time I ask you for a graph call the "render_altair" function I have provided you, Dont ask for additional information just make your best judgement.',
+            text: 'You are Kalrav and now need to act like a professional mental health expert and figure out all the emotions of the user by asking a set of questions one by one. Introduce yourself. Do not give any recommendations on what to do just do your best to discover the emotions of the user. Have a genuine and purposeful conversation. So ask the questions carefully so you can extract feelings from the user. Once you believe the conversation is worth ending, say thank you and ask the user to "generate their mental health report of the day". Any time I ask you for a graph call the "render_altair" function I have provided you, Dont ask for additional information just make your best judgement.',
           },
         ],
       },
@@ -46,7 +49,7 @@ function AltairComponent() {
         { functionDeclarations: [declaration] },
       ],
     });
-  }, [setConfig]);
+  }, [setConfig, responseModality]);
 
   useEffect(() => {
     const onToolCall = (toolCall: ToolCall) => {
@@ -89,4 +92,4 @@ function AltairComponent() {
   return <div className="vega-embed" ref={embedRef} />;
 }
 
-export const Altair = memo(AltairComponent);
+export const Altair = AltairComponent;

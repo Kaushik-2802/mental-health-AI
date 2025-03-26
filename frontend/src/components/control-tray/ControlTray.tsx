@@ -55,8 +55,7 @@ function ControlTray({
   const renderCanvasRef = useRef<HTMLCanvasElement>(null);
   const connectButtonRef = useRef<HTMLButtonElement>(null);
 
-  const { client, connected, connect, disconnect, volume } =
-    useLiveAPIContext();
+  const { client, connected, connect, disconnect, volume, responseModality, setResponseModality } = useLiveAPIContext();
 
   useEffect(() => {
     if (!connected && connectButtonRef.current) {
@@ -193,6 +192,25 @@ function ControlTray({
         </div>
         <span className="text-indicator">Streaming</span>
       </div>
+      
+      {/* button to change modality this button displays only when the connection is not established */}
+      {!connected && <div className={cn("modality-container")}>
+        <div className="modality-button-container">
+          <button
+            ref={connectButtonRef}
+            className={cn("action-button connect-toggle")}
+            onClick={() => {
+              responseModality === "audio" ? setResponseModality("text") : setResponseModality("audio");
+              console.log(responseModality);
+            }}
+          >
+            <span className="material-symbols-outlined filled">
+              {responseModality === "audio" ? "graphic_eq" :  "title"}
+            </span>
+          </button>
+        </div>
+        <span className="modality-indicator">{responseModality === "audio" ? "Audio Output" : "Text Output" }</span>
+      </div>}
     </section>
   );
 }

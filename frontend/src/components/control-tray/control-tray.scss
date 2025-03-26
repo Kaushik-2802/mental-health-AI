@@ -100,12 +100,6 @@
     }
   }
   
-  @property --volume {
-    syntax: "length";
-    inherit: false;
-    initial-value: 0px;
-  }
-  
   .disabled .mic-button,
   .mic-button.disabled {
     &:before {
@@ -165,7 +159,7 @@
     display: inline-flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 8px;
+    gap: 10px;
     padding-bottom: 18px;
   
     .disabled .action-button,
@@ -202,6 +196,32 @@
       }
     }
   }
+
+  .modality-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    margin-left: 20px;
+    min-width: 100px;
+
+    .modality-button-container {
+      border-radius: 27px;
+      border: 1px solid var(--Neutral-30);
+      background: var(--Neutral-5);
+      padding: 10px;
+    }
+
+    .modality-indicator {
+      font-size: 11px;
+      color: var(--Blue-500);
+      user-select: none;
+      text-align: center;
+      width: 100%;
+    }
+  }
+  
   
   .actions-nav {
     background: var(--Neutral-5);

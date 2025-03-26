@@ -120,24 +120,25 @@
   }
   
   .logger li {
-    display: block;
-    padding: 8px 0;
     color: var(--Neutral-50, #707577);
     font-family: "Space Mono";
-    font-size: 14px;
+    font-size: 20px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
   }
-  
+
   .logger li .timestamp {
     width: 70px;
+    font-size: 14px;
     flex-grow: 0;
     flex-shrink: 0;
     color: var(--Neutral-50);
   }
   
   .logger li .source {
+    margin-left: 2px;
+    font-size: 15px;
     flex-shrink: 0;
     font-weight: bold;
   }
@@ -164,7 +165,5 @@
   }
   
   .logger li .message {
-    flex-grow: 1;
     color: var(--Neutral-50);
   }
-  

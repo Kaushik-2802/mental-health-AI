@@ -13,7 +13,7 @@ const filterOptions = [
 ];
 
 export default function SidePanel({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  const { connected, client } = useLiveAPIContext();
+  const { responseModality, connected, client } = useLiveAPIContext();
   const [open, setOpen] = useState(true);
   const loggerRef = useRef<HTMLDivElement>(null);
   const loggerLastHeightRef = useRef<number>(-1);
@@ -38,6 +38,16 @@ export default function SidePanel({ className, ...props }: HTMLAttributes<HTMLDi
     }
   }, [logs]);
 
+  useEffect(() => {
+    if (responseModality === "text") {
+      setOpen(true);
+      setSelectedOption(filterOptions[0]);
+    } else {
+      setOpen(false);
+      setSelectedOption(filterOptions[2]);
+    }
+  }, [responseModality]);
+
   // Listen for log events and store them
   useEffect(() => {
     client.on("log", log);
@@ -58,7 +68,7 @@ export default function SidePanel({ className, ...props }: HTMLAttributes<HTMLDi
   return (
     <div 
       className={`bg-[var(--Neutral-00)] flex flex-col h-screen border-r border-[var(--gray-600)] text-[var(--Neutral-90)] font-sans text-sm font-normal leading-[160%] transition-all duration-200 ease-in-out ${
-        open ? "w-[500px]" : "w-10"
+        open ? "w-[50%]" : "w-10"
       } ${className || ""}`} 
       {...props}
     >
@@ -117,7 +127,7 @@ export default function SidePanel({ className, ...props }: HTMLAttributes<HTMLDi
                   : undefined,
             }),
           }}
-          defaultValue={selectedOption}
+          value={selectedOption}
           options={filterOptions}
           onChange={(e) => {
             setSelectedOption(e);

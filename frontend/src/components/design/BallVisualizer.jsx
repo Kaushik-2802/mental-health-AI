@@ -93,7 +93,7 @@ const BallVisualizer = () => {
 
     // Dynamic glow effect based on activity
     ctx.shadowColor = 'rgba(150, 0, 255, 0.7)';
-    ctx.shadowBlur = 20 + activity * 0.5;
+    ctx.shadowBlur = 100 + activity * 0.5;
     
     // Main ball
     ctx.fillStyle = gradient;
@@ -115,7 +115,7 @@ const BallVisualizer = () => {
       
       ctx.beginPath();
       ctx.strokeStyle = `rgba(150, 0, 255, ${0.7 - (i * 0.1)})`;
-      ctx.lineWidth = 2 + (activity * 0.05);
+      ctx.lineWidth = 3 + (activity * 0.05);
       ctx.arc(centerX, centerY, ringRadius + pulseEffect, 0, Math.PI * 2);
       ctx.stroke();
       

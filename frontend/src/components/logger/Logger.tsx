@@ -49,6 +49,7 @@ const LogEntry = ({
   >
     <span className="timestamp">{formatTime(log.date)}</span>
     <span className="source">{log.type}</span>
+    <br />
     <span className="message">
       <MessageComponent message={log.message} />
     </span>

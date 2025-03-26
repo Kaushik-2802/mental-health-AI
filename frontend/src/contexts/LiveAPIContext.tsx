@@ -1,7 +1,12 @@
-import { createContext, FC, ReactNode, useContext } from "react";
+import { createContext, FC, ReactNode, useContext, useState } from "react";
 import { useLiveAPI, UseLiveAPIResults } from "../hooks/use-live-api";
 
-const LiveAPIContext = createContext<UseLiveAPIResults | undefined>(undefined);
+interface LiveAPIContextType extends UseLiveAPIResults {
+  responseModality : string;
+  setResponseModality : (responseModality : string) => void;
+}
+
+const LiveAPIContext = createContext<LiveAPIContextType | undefined>(undefined);
 
 export type LiveAPIProviderProps = {
   children: ReactNode;
@@ -15,9 +20,10 @@ export const LiveAPIProvider: FC<LiveAPIProviderProps> = ({
   children,
 }) => {
   const liveAPI = useLiveAPI({ url, apiKey });
+  const [responseModality, setResponseModality] = useState<string>("audio");
 
   return (
-    <LiveAPIContext.Provider value={liveAPI}>
+    <LiveAPIContext.Provider value={{...liveAPI, responseModality, setResponseModality}}>
       {children}
     </LiveAPIContext.Provider>
   );
@@ -26,7 +32,7 @@ export const LiveAPIProvider: FC<LiveAPIProviderProps> = ({
 export const useLiveAPIContext = () => {
   const context = useContext(LiveAPIContext);
   if (!context) {
-    throw new Error("useLiveAPIContext must be used wihin a LiveAPIProvider");
+    throw new Error("useLiveAPIContext must be used within a LiveAPIProvider");
   }
   return context;
 };
