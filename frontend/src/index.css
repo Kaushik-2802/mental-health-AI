@@ -10,6 +10,48 @@
     --font-sora: "Sora", sans-serif;
     --font-code: "Source Code Pro", monospace;
     --font-grotesk: "Space Grotesk", sans-serif;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+}
+
+.dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
 }
 
 * {
@@ -22,66 +64,161 @@
     }
 }
 
-.rotate-45 {
-    @apply rotate-[45deg];
+/* Rotation Utilities */
+@layer components {
+    .rotate-45 {
+        @apply rotate-[45deg];
+    }
+
+    .rotate-90 {
+        @apply rotate-[90deg];
+    }
+
+    .rotate-135 {
+        @apply rotate-[135deg];
+    }
+
+    .rotate-180 {
+        @apply rotate-[180deg];
+    }
+
+    .rotate-225 {
+        @apply rotate-[225deg];
+    }
+
+    .rotate-270 {
+        @apply rotate-[270deg];
+    }
+
+    .rotate-315 {
+        @apply rotate-[315deg];
+    }
+
+    .rotate-360 {
+        @apply rotate-[360deg];
+    }
+
+    .-rotate-45 {
+        @apply rotate-[-45deg];
+    }
+
+    .-rotate-90 {
+        @apply rotate-[-90deg];
+    }
+
+    .-rotate-135 {
+        @apply rotate-[-135deg];
+    }
+
+    .-rotate-180 {
+        @apply rotate-[-180deg];
+    }
+
+    .-rotate-225 {
+        @apply rotate-[-225deg];
+    }
+
+    .-rotate-270 {
+        @apply rotate-[-270deg];
+    }
+
+    .-rotate-315 {
+        @apply rotate-[-315deg];
+    }
+
+    .-rotate-360 {
+        @apply rotate-[-360deg];
+    }
 }
 
-.rotate-90 {
-    @apply rotate-[90deg];
+/* Custom Calendar Styles */
+.react-calendar {
+    width: 100%;
+    border: none;
+    font-family: inherit;
+    background: transparent;
 }
 
-.rotate-135 {
-    @apply rotate-[135deg];
+.react-calendar__navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
 }
 
-.rotate-180 {
-    @apply rotate-[180deg];
+.react-calendar__navigation button {
+    min-width: 44px;
+    background: none;
+    border: none;
+    border-radius: 6px;
+    padding: 5px;
 }
 
-.rotate-225 {
-    @apply rotate-[225deg];
+.react-calendar__navigation button:disabled {
+    opacity: 0.5;
 }
 
-.rotate-270 {
-    @apply rotate-[270deg];
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+    background-color: rgba(172, 106, 255, 0.1);
 }
 
-.rotate-315 {
-    @apply rotate-[315deg];
+.react-calendar__month-view__weekdays {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.75em;
 }
 
-.rotate-360 {
-    @apply rotate-[360deg];
+.react-calendar__month-view__weekdays__weekday {
+    padding: 8px;
 }
 
-.-rotate-45 {
-    @apply rotate-[-45deg];
+.react-calendar__month-view__weekdays__weekday abbr {
+    text-decoration: none;
 }
 
-.-rotate-90 {
-    @apply rotate-[-90deg];
+.react-calendar__tile {
+    max-width: 100%;
+    padding: 10px 6px;
+    background: none;
+    text-align: center;
+    line-height: 16px;
+    border: none;
+    border-radius: 6px;
 }
 
-.-rotate-135 {
-    @apply rotate-[-135deg];
+.react-calendar__tile:disabled {
+    opacity: 0.5;
 }
 
-.-rotate-180 {
-    @apply rotate-[-180deg];
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+    background-color: rgba(172, 106, 255, 0.2);
 }
 
-.-rotate-225 {
-    @apply rotate-[-225deg];
+.react-calendar__tile--now {
+    background: rgba(172, 106, 255, 0.1);
 }
 
-.-rotate-270 {
-    @apply rotate-[-270deg];
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+    background: rgba(172, 106, 255, 0.2);
 }
 
-.-rotate-315 {
-    @apply rotate-[-315deg];
+.react-calendar__tile--active {
+    background: #AC6AFF;
+    color: white;
 }
 
-.-rotate-360 {
-    @apply rotate-[-360deg];
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+    background: #9A5BFF;
+}
+
+.react-calendar__month-view__days__day--weekend {
+    color: inherit;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth {
+    color: #757575;
 }

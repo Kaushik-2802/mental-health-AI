@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { useEffect, useRef, useState, HTMLAttributes} from "react";
+import { useEffect, useRef, useState, HTMLAttributes } from "react";
 import { RiSidebarFoldLine, RiSidebarUnfoldLine } from "react-icons/ri";
 import Select from "react-select";
 import { useLiveAPIContext } from "../contexts/LiveAPIContext";
@@ -12,8 +12,16 @@ const filterOptions = [
   { value: "none", label: "All" },
 ];
 
+<<<<<<< HEAD
 export default function SidePanel({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   const { responseModality, connected, client } = useLiveAPIContext();
+=======
+export default function SidePanel({
+  className,
+  ...props
+}: HTMLAttributes<HTMLDivElement>) {
+  const { connected, client } = useLiveAPIContext();
+>>>>>>> 747dafba76627710f16390c948afc7638bcb4661
   const [open, setOpen] = useState(true);
   const loggerRef = useRef<HTMLDivElement>(null);
   const loggerLastHeightRef = useRef<number>(-1);
@@ -66,21 +74,26 @@ export default function SidePanel({ className, ...props }: HTMLAttributes<HTMLDi
   };
 
   return (
-    <div 
+    <div
       className={`bg-[var(--Neutral-00)] flex flex-col h-screen border-r border-[var(--gray-600)] text-[var(--Neutral-90)] font-sans text-sm font-normal leading-[160%] transition-all duration-200 ease-in-out ${
+<<<<<<< HEAD
         open ? "w-[50%]" : "w-10"
       } ${className || ""}`} 
+=======
+        open ? "w-[500px]" : "w-10"
+      } ${className || ""}`}
+>>>>>>> 747dafba76627710f16390c948afc7638bcb4661
       {...props}
     >
       <header className="flex justify-between items-center border-b border-[var(--Neutral-20)] p-3">
-        <h2 
+        <h2
           className={`text-[var(--Neutral-90)] font-['Google_Sans'] text-xl font-medium leading-6 transition-opacity duration-200 ${
             open ? "opacity-100 visible" : "opacity-0 invisible w-0"
           }`}
         >
           Console
         </h2>
-        <button 
+        <button
           className="h-8 flex items-center justify-center transition-transform duration-200"
           onClick={() => setOpen(!open)}
           aria-label={open ? "Collapse sidebar" : "Expand sidebar"}
@@ -92,10 +105,14 @@ export default function SidePanel({ className, ...props }: HTMLAttributes<HTMLDi
           )}
         </button>
       </header>
-      
-      <section className={`flex flex-col gap-3 px-4 py-3 transition-opacity duration-200 ${
-        open ? "opacity-100 visible" : "opacity-0 invisible h-0 overflow-hidden"
-      }`}>
+
+      <section
+        className={`flex flex-col gap-3 px-4 py-3 transition-opacity duration-200 ${
+          open
+            ? "opacity-100 visible"
+            : "opacity-0 invisible h-0 overflow-hidden"
+        }`}
+      >
         <Select
           className="react-select w-full"
           classNamePrefix="react-select"
@@ -107,7 +124,7 @@ export default function SidePanel({ className, ...props }: HTMLAttributes<HTMLDi
               minHeight: "33px",
               maxHeight: "33px",
               border: 0,
-              width: "100%"
+              width: "100%",
             }),
             singleValue: (baseStyles) => ({
               ...baseStyles,
@@ -123,8 +140,8 @@ export default function SidePanel({ className, ...props }: HTMLAttributes<HTMLDi
               backgroundColor: isFocused
                 ? "var(--Neutral-30)"
                 : isSelected
-                  ? "var(--Neutral-20)"
-                  : undefined,
+                ? "var(--Neutral-20)"
+                : undefined,
             }),
           }}
           value={selectedOption}
@@ -133,7 +150,7 @@ export default function SidePanel({ className, ...props }: HTMLAttributes<HTMLDi
             setSelectedOption(e);
           }}
         />
-        <div 
+        <div
           className={`select-none rounded border border-[var(--Neutral-20)] bg-[var(--Neutral-10)] flex h-[33px] justify-center items-center gap-1.5 px-2 text-center font-['Space_Mono'] text-sm font-normal w-full ${
             connected ? "text-[var(--Blue-500)]" : ""
           }`}
@@ -141,19 +158,19 @@ export default function SidePanel({ className, ...props }: HTMLAttributes<HTMLDi
           {connected ? "🔵 Streaming" : "⏸️ Paused"}
         </div>
       </section>
-      
-      <div 
+
+      <div
         className={`flex-grow overflow-x-hidden overflow-y-auto transition-all duration-200 ${
           !open ? "opacity-0 invisible w-0" : "opacity-100 visible"
-        }`} 
+        }`}
         ref={loggerRef}
       >
         <Logger
           filter={(selectedOption?.value as LoggerFilterType) || "none"}
         />
       </div>
-      
-      <div 
+
+      <div
         className={`border-t border-[var(--Neutral-20)] px-4 py-3 ${
           !open ? "opacity-0 invisible h-0 overflow-hidden" : ""
         } ${!connected ? "opacity-50 pointer-events-none" : ""}`}
@@ -171,7 +188,7 @@ export default function SidePanel({ className, ...props }: HTMLAttributes<HTMLDi
             }}
             onChange={(e) => setTextInput(e.target.value)}
             value={textInput}
-            placeholder=""
+            placeholder="Type your message here..."
             rows={1}
           ></textarea>
           <span
