@@ -6,6 +6,7 @@ import ReportPage from "./pages/ReportPage";
 import DoctorDashboardPage from "./pages/DoctordashboardPage";
 import SignUpPage from "./pages/SignUpPage";
 import VoiceChatPage from "./pages/VoiceChatPage";
+import PatientDashboard from "./pages/PatientDashboard";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/report" element={<ReportPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/voicechat" element={<VoiceChatPage />} />
+        <Route path="/patientdashboard/*" element={<PatientDashboard />} />
       </Routes>
     </Router>
   );
