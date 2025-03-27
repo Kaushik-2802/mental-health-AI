@@ -12,16 +12,8 @@ const filterOptions = [
   { value: "none", label: "All" },
 ];
 
-<<<<<<< HEAD
 export default function SidePanel({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   const { responseModality, connected, client } = useLiveAPIContext();
-=======
-export default function SidePanel({
-  className,
-  ...props
-}: HTMLAttributes<HTMLDivElement>) {
-  const { connected, client } = useLiveAPIContext();
->>>>>>> 747dafba76627710f16390c948afc7638bcb4661
   const [open, setOpen] = useState(true);
   const loggerRef = useRef<HTMLDivElement>(null);
   const loggerLastHeightRef = useRef<number>(-1);
@@ -76,13 +68,8 @@ export default function SidePanel({
   return (
     <div
       className={`bg-[var(--Neutral-00)] flex flex-col h-screen border-r border-[var(--gray-600)] text-[var(--Neutral-90)] font-sans text-sm font-normal leading-[160%] transition-all duration-200 ease-in-out ${
-<<<<<<< HEAD
         open ? "w-[50%]" : "w-10"
       } ${className || ""}`} 
-=======
-        open ? "w-[500px]" : "w-10"
-      } ${className || ""}`}
->>>>>>> 747dafba76627710f16390c948afc7638bcb4661
       {...props}
     >
       <header className="flex justify-between items-center border-b border-[var(--Neutral-20)] p-3">
@@ -91,7 +78,7 @@ export default function SidePanel({
             open ? "opacity-100 visible" : "opacity-0 invisible w-0"
           }`}
         >
-          Console
+          Chat
         </h2>
         <button
           className="h-8 flex items-center justify-center transition-transform duration-200"

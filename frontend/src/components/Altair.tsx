@@ -24,10 +24,7 @@ function AltairComponent() {
   const [jsonString, setJSONString] = useState<string>("");
   const { client, setConfig, responseModality } = useLiveAPIContext();
 
-  console.log("reredner altair")
-
   useEffect(() => {
-    console.log("reredner altair from effect ")
     setConfig({
       model: "models/gemini-2.0-flash-exp",
       generationConfig: {
