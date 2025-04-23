@@ -163,10 +163,13 @@ function ChatPage() {
       </div>
 
       <div className="flex-1 flex flex-col h-full">
-        <ChatHeader 
-          activeConversation={activeConversation}
-          brainwaveSymbol={brainwaveSymbol}
-        />
+      <ChatHeader 
+  activeConversation={activeConversation}
+  brainwaveSymbol={brainwaveSymbol}
+  isSidebarOpen={isSidebarOpen}
+  setSidebarOpen={setSidebarOpen}
+/>
+
         
         <MessageList
           messages={activeConversation.messages}
