@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom"; // Using React Router instead of Next.js
 import Card from "../ui/Card";
 import Button from "../ui/Button";
 import {
@@ -18,9 +19,11 @@ interface CheckInOption {
   description: string;
   color: "1" | "2" | "3" | "4" | "5" | "6";
   duration: string;
+  route?: string; // Added route property
 }
 
 const CheckInOptions: React.FC = () => {
+  const navigate = useNavigate(); // Using React Router's navigate
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [step, setStep] = useState<"selection" | "confirmation">("selection");
 
@@ -34,6 +37,7 @@ const CheckInOptions: React.FC = () => {
         "Express yourself through writing in a private journal entry",
       color: "2",
       duration: "~5 mins",
+      route: "/chat", // Added route for text option
     },
     {
       id: "voice",
@@ -42,6 +46,7 @@ const CheckInOptions: React.FC = () => {
       description: "Record a voice memo about how you're feeling today",
       color: "1",
       duration: "~3 mins",
+      route: "/voicechat", // Added route for voice option
     },
     {
       id: "community",
@@ -51,6 +56,7 @@ const CheckInOptions: React.FC = () => {
         "Join a guided group session with others on a similar journey",
       color: "6",
       duration: "15-30 mins",
+      route: "/community", // Added a default route for community
     },
   ];
 
@@ -69,6 +75,13 @@ const CheckInOptions: React.FC = () => {
   const selectedOptionDetails = options.find(
     (option) => option.id === selectedOption
   );
+
+  // Handle start check-in button click
+  const handleStartCheckIn = () => {
+    if (selectedOptionDetails && selectedOptionDetails.route) {
+      navigate(selectedOptionDetails.route); // Using React Router's navigate
+    }
+  };
 
   // Option card animation variants
   const cardVariants = {
@@ -198,6 +211,7 @@ const CheckInOptions: React.FC = () => {
                   <Button
                     color={selectedOptionDetails.color}
                     icon={<FaCheckCircle />}
+                    onClick={handleStartCheckIn} // Added onClick handler
                   >
                     Start Check-in Now
                   </Button>
