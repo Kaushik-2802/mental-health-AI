@@ -23,7 +23,7 @@ const Hero = () => {
     >
       <div className="container relative" ref={parallaxRef}>
         <div className="relative z-1 max-w-[62rem] mx-auto text-center mb-[3.875rem] md:mb-20 lg:mb-[6.25rem]">
-          <h1 className="h1 mb-6">
+          <h1 className="h1 mb-6 text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
             Explore the Possibilities of&nbsp;AI&nbsp;with {` `}
             <span className="inline-block relative">
               KalRav{" "}
@@ -36,7 +36,7 @@ const Hero = () => {
               />
             </span>
           </h1>
-          <p className="body-1 max-w-3xl mx-auto mb-6 text-n-2 lg:mb-8">
+          <p className="body-1 max-w-3xl mx-auto mb-6 text-n-2 lg:mb-8 text-lg md:text-xl">
             Unleash the power of AI within KalRav for continuous mental health
             monitoring. KalRav takes user inputs periodically and generates
             comprehensive reports to track your mental well-being. Dive into a

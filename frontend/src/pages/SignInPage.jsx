@@ -29,7 +29,8 @@ const SignInPage = () => {
             Login
           </h1>
           <p className="text-dull-white text-center md:text-left">
-            Access to 300+ hours of courses, tutorials and livestreams
+            Say Hello 🙋‍♂️ to your own round-the-clock friend who listens to your
+            feelings !
           </p>
           <form action="" className="space-y-6 text-white">
             <div className="relative">
@@ -81,12 +82,6 @@ const SignInPage = () => {
               Forgot password?{" "}
               <a className="text-neon-blue font-semibold cursor-pointer">
                 Reset password
-              </a>
-            </p>
-            <p>
-              Don't have a password yet?{" "}
-              <a className="text-neon-blue font-semibold cursor-pointer">
-                Set password
               </a>
             </p>
           </div>
